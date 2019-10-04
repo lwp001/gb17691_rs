@@ -21,14 +21,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<schema name="public"/>
 	<role name="gb17691"/>
 	<position x="60" y="40"/>
-	<column name="id" not-null="true" default-value="0">
+	<column name="id" not-null="true">
 		<type name="bigserial" length="0"/>
 	</column>
 	<column name="vin" not-null="true">
 		<type name="text" length="0"/>
 	</column>
 	<column name="utc" not-null="true">
-		<type name="timestamp" length="0"/>
+		<type name="timestamptz" length="0"/>
 	</column>
 	<column name="sno" not-null="true" default-value="0">
 		<type name="integer" length="0"/>
@@ -60,7 +60,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="reagent_tail" not-null="true">
 		<type name="real" length="0"/>
 	</column>
-	<column name="air_flow" not-null="true">
+	<column name="air_inflow" not-null="true">
 		<type name="real" length="0"/>
 		<comment><![CDATA[kg/h]]></comment>
 	</column>
@@ -74,7 +74,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="real" length="0"/>
 	</column>
 	<column name="coolant_temperature" not-null="true">
-		<type name="real" length="0"/>
+		<type name="smallint" length="0"/>
 	</column>
 	<column name="oil_level" not-null="true">
 		<type name="real" length="0"/>
