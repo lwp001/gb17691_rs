@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.2-beta1" last-position="0,0" last-zoom="1" max-obj-count="4"
+	 default-schema="public" default-owner="postgres">
+<role name="gb17691"
+      createrole="true"
+      login="true"
+      password="gb17691">
+</role>
+
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layer="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="engine" layer="0" collapse-mode="2" max-obj-count="30">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="60" y="40"/>
+	<column name="id" not-null="true" default-value="0">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="sno" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="speed" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="atmospheric_pressure" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="real_torque" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="friction_torque" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="rotate" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="fuel_flow" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="scr_up_nox" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="scr_down_nox" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="reagent_tail" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="air_flow" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[kg/h]]></comment>
+	</column>
+	<column name="scr_entrance_temperature" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="scr_export_temperature" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="dpf_diference_pressure" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="coolant_temperature" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="oil_level" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="gps_status" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="longitude" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="latitude" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="mileage" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="ext_data">
+		<type name="jsonb" length="0"/>
+		<comment><![CDATA[{id:1,p1:d1...}]]></comment>
+	</column>
+	<column name="ct_time" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="engine_pk" type="pk-constr" table="public.engine">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="obd" layer="0" collapse-mode="2" max-obj-count="18">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="400" y="40"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="sno" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="protocal" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="mil_lamp" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="diagnose_support" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="diagnose_status" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="obd_vin">
+		<type name="text" length="0"/>
+	</column>
+	<column name="software_id">
+		<type name="text" length="0"/>
+	</column>
+	<column name="calibration_code">
+		<type name="text" length="0"/>
+	</column>
+	<column name="iupr">
+		<type name="text" length="0"/>
+	</column>
+	<column name="fault_count" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="faults">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ct_time" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="obd_pk" type="pk-constr" table="public.obd">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="login_logout_records" layer="0" collapse-mode="2" max-obj-count="10">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="420" y="380"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="login_time" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="login_serial" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="iccid">
+		<type name="text" length="0"/>
+	</column>
+	<column name="logout_time">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="logout_serial">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="ct_time" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="update_time">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="login_logout_records_pk" type="pk-constr" table="public.login_logout_records">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+</dbmodel>
