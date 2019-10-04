@@ -1,2 +1,2 @@
 # gb17691_rs
-learn rust gb17671
+learn rust gb17691
