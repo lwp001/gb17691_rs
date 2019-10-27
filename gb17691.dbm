@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.2-beta1" last-position="0,137" last-zoom="1" max-obj-count="8"
+<dbmodel pgmodeler-ver="0.9.2-beta1" last-position="0,0" last-zoom="1" max-obj-count="8"
 	 default-schema="public" default-owner="gb17691">
 <role name="gb17691"
       createrole="true"
@@ -162,7 +162,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<role name="gb17691"/>
 	<position x="60" y="780"/>
 	<column name="id" not-null="true">
-		<type name="bigint" length="0"/>
+		<type name="uuid" length="0"/>
 	</column>
 	<column name="vin" not-null="true">
 		<type name="text" length="0"/>
@@ -196,14 +196,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="vehicle" layer="0" collapse-mode="2" max-obj-count="16">
 	<schema name="public"/>
 	<role name="gb17691"/>
-	<position x="440" y="60"/>
+	<position x="460" y="60"/>
 	<column name="id" not-null="true">
-		<type name="bigint" length="0"/>
+		<type name="uuid" length="0"/>
 	</column>
 	<column name="vin" not-null="true">
 		<type name="text" length="0"/>
 	</column>
-	<column name="lpn">
+	<column name="lpn" not-null="true">
 		<type name="text" length="0"/>
 		<comment><![CDATA[license plate number]]></comment>
 	</column>
@@ -213,11 +213,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 2 yellow]]></comment>
 	</column>
 	<column name="org_id" not-null="true">
-		<type name="bigint" length="0"/>
+		<type name="uuid" length="0"/>
 		<comment><![CDATA[organization id]]></comment>
 	</column>
 	<column name="model_id">
-		<type name="bigint" length="0"/>
+		<type name="uuid" length="0"/>
 		<comment><![CDATA[车型 vehicle models id]]></comment>
 	</column>
 	<column name="division_code">
@@ -245,7 +245,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<column name="status" not-null="true" default-value="1">
 		<type name="smallint" length="0"/>
-		<comment><![CDATA[1 nomal   2 freeze]]></comment>
+		<comment><![CDATA[1 nomal  0 freeze]]></comment>
 	</column>
 	<column name="created" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
@@ -253,19 +253,25 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="vehicle_pk" type="pk-constr" table="public.vehicle">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+	<constraint name="vin_unique" type="uq-constr" table="public.vehicle">
+		<columns names="vin" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="lpn_unique" type="uq-constr" table="public.vehicle">
+		<columns names="lpn" ref-type="src-columns"/>
+	</constraint>
 </table>
 
 <table name="sys_organize" layer="0" collapse-mode="2" max-obj-count="18">
 	<schema name="public"/>
 	<position x="880" y="320"/>
 	<column name="id" not-null="true">
-		<type name="bigint" length="0"/>
+		<type name="uuid" length="0"/>
 	</column>
 	<column name="name" not-null="true">
 		<type name="text" length="0"/>
 	</column>
 	<column name="parent_id" not-null="true" default-value="0">
-		<type name="bigint" length="0"/>
+		<type name="uuid" length="0"/>
 	</column>
 	<column name="parent_ids_path" not-null="true" default-value="'/'">
 		<type name="text" length="0"/>
@@ -300,7 +306,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<column name="status" not-null="true" default-value="1">
 		<type name="integer" length="0"/>
-		<comment><![CDATA[0 delete 1 normal  2 freeze]]></comment>
+		<comment><![CDATA[ 1 normal  0 freeze]]></comment>
 	</column>
 	<column name="created" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
@@ -308,13 +314,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="sys_organize_pk" type="pk-constr" table="public.sys_organize">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+	<constraint name="name_unique" type="uq-constr" table="public.sys_organize">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
 </table>
 
-<table name="sys_user" layer="0" collapse-mode="2" max-obj-count="15">
+<table name="sys_user" layer="0" collapse-mode="2" max-obj-count="14">
 	<schema name="public"/>
 	<position x="440" y="540"/>
 	<column name="id" not-null="true">
-		<type name="bigint" length="0"/>
+		<type name="uuid" length="0"/>
 	</column>
 	<column name="account" not-null="true">
 		<type name="text" length="0"/>
@@ -326,7 +335,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="text" length="0"/>
 	</column>
 	<column name="org_id" not-null="true">
-		<type name="bigint" length="0"/>
+		<type name="uuid" length="0"/>
 	</column>
 	<column name="sex" default-value="0">
 		<type name="smallint" length="0"/>
@@ -334,9 +343,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<column name="phone">
 		<type name="text" length="0"/>
-	</column>
-	<column name="address">
-		<type name="smallint" length="0"/>
 	</column>
 	<column name="photo">
 		<type name="text" length="0"/>
@@ -357,7 +363,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 	<constraint name="account_unique" type="uq-constr" table="public.sys_user">
-		<columns names="account,status" ref-type="src-columns"/>
+		<columns names="account" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -369,10 +375,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="serial" length="0"/>
 	</column>
 	<column name="user_id" not-null="true">
-		<type name="bigint" length="0"/>
+		<type name="uuid" length="0"/>
 	</column>
 	<column name="resource_id" not-null="true">
-		<type name="bigint" length="0"/>
+		<type name="uuid" length="0"/>
 		<comment><![CDATA[资源ID]]></comment>
 	</column>
 	<column name="type">
