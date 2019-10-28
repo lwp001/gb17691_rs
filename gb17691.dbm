@@ -270,7 +270,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="name" not-null="true">
 		<type name="text" length="0"/>
 	</column>
-	<column name="parent_id" not-null="true" default-value="0">
+	<column name="parent_id" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>
 	<column name="parent_ids_path" not-null="true" default-value="'/'">
@@ -388,6 +388,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="created" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
 	</column>
+	<constraint name="sys_relation_pk" type="pk-constr" table="public.sys_relation">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
 </table>
 
 <constraint name="org_fk" type="fk-constr" comparison-type="MATCH FULL"
