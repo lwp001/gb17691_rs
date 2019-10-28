@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.2-beta1" last-position="0,0" last-zoom="1" max-obj-count="8"
+<dbmodel pgmodeler-ver="0.9.2-beta1" last-position="0,138" last-zoom="1" max-obj-count="8"
 	 default-schema="public" default-owner="gb17691">
 <role name="gb17691"
       createrole="true"
@@ -106,7 +106,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="obd" layer="0" collapse-mode="2" max-obj-count="18">
 	<schema name="public"/>
 	<role name="gb17691"/>
-	<position x="60" y="480"/>
+	<position x="60" y="500"/>
 	<column name="id" not-null="true">
 		<type name="bigserial" length="0"/>
 	</column>
@@ -160,7 +160,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="login_logout_records" layer="0" collapse-mode="2" max-obj-count="10">
 	<schema name="public"/>
 	<role name="gb17691"/>
-	<position x="60" y="780"/>
+	<position x="60" y="800"/>
 	<column name="id" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>
@@ -261,7 +261,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="sys_organize" layer="0" collapse-mode="2" max-obj-count="18">
+<table name="organize" layer="0" collapse-mode="2" max-obj-count="18">
 	<schema name="public"/>
 	<position x="880" y="320"/>
 	<column name="id" not-null="true">
@@ -311,15 +311,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="created" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
 	</column>
-	<constraint name="sys_organize_pk" type="pk-constr" table="public.sys_organize">
+	<constraint name="sys_organize_pk" type="pk-constr" table="public.organize">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="name_unique" type="uq-constr" table="public.sys_organize">
+	<constraint name="name_unique" type="uq-constr" table="public.organize">
 		<columns names="name" ref-type="src-columns"/>
 	</constraint>
 </table>
 
-<table name="sys_user" layer="0" collapse-mode="2" max-obj-count="14">
+<table name="user" layer="0" collapse-mode="2" max-obj-count="14">
 	<schema name="public"/>
 	<position x="440" y="540"/>
 	<column name="id" not-null="true">
@@ -359,15 +359,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="created" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
 	</column>
-	<constraint name="sys_user_pk" type="pk-constr" table="public.sys_user">
+	<constraint name="sys_user_pk" type="pk-constr" table="public.&quot;user&quot;">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="account_unique" type="uq-constr" table="public.sys_user">
+	<constraint name="account_unique" type="uq-constr" table="public.&quot;user&quot;">
 		<columns names="account" ref-type="src-columns"/>
 	</constraint>
 </table>
 
-<table name="sys_relation" layer="0" collapse-mode="2" max-obj-count="6">
+<table name="user_resource" layer="0" collapse-mode="2" max-obj-count="6">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="900" y="680"/>
@@ -388,43 +388,43 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="created" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
 	</column>
-	<constraint name="sys_relation_pk" type="pk-constr" table="public.sys_relation">
+	<constraint name="sys_relation_pk" type="pk-constr" table="public.user_resource">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
 <constraint name="org_fk" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_organize" table="public.vehicle">
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.organize" table="public.vehicle">
 	<columns names="org_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
 <constraint name="uer_org_fk" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_organize" table="public.sys_user">
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.organize" table="public.&quot;user&quot;">
 	<columns names="org_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
 <constraint name="fk_owner" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_user" table="public.sys_relation">
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.user_resource">
 	<columns names="user_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
 <constraint name="fk_resource_org" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_organize" table="public.sys_relation">
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.organize" table="public.user_resource">
 	<columns names="resource_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
 <relationship name="rel_vehicle_sys_organize" type="relfk" layer="0"
 	 src-table="public.vehicle"
-	 dst-table="public.sys_organize" reference-fk="org_fk"
+	 dst-table="public.organize" reference-fk="org_fk"
 	 src-required="false" dst-required="false"/>
 
 <relationship name="rel_sys_user_sys_organize" type="relfk" layer="0"
-	 src-table="public.sys_user"
-	 dst-table="public.sys_organize" reference-fk="uer_org_fk"
+	 src-table="public.&quot;user&quot;"
+	 dst-table="public.organize" reference-fk="uer_org_fk"
 	 src-required="false" dst-required="false">
 	<label ref-type="name-label">
 		<position x="-5.31795" y="1.03276"/>
@@ -432,13 +432,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </relationship>
 
 <relationship name="rel_sys_relation_sys_user" type="relfk" layer="0"
-	 src-table="public.sys_relation"
-	 dst-table="public.sys_user" reference-fk="fk_owner"
+	 src-table="public.user_resource"
+	 dst-table="public.&quot;user&quot;" reference-fk="fk_owner"
 	 src-required="false" dst-required="false"/>
 
 <relationship name="rel_sys_relation_sys_organize" type="relfk" layer="0"
-	 src-table="public.sys_relation"
-	 dst-table="public.sys_organize" reference-fk="fk_resource_org"
+	 src-table="public.user_resource"
+	 dst-table="public.organize" reference-fk="fk_resource_org"
 	 src-required="false" dst-required="false"/>
 
 </dbmodel>
