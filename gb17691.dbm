@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.2-beta2" last-position="0,990" last-zoom="1" max-obj-count="16"
+<dbmodel pgmodeler-ver="0.9.2-beta2" last-position="180,828" last-zoom="1" max-obj-count="21"
 	 default-schema="public" default-owner="gb17691">
 <role name="gb17691"
       createrole="true"
@@ -859,6 +859,243 @@ lpn_color•9•其他•0]]>
 运输行业类型•trade_classify⸣
 燃料类型•fule_type]]>
 	</initial-data>
+</table>
+
+<schema name="jt808" layer="0" rect-visible="true" fill-color="#e1e1e1">
+	<role name="gb17691"/>
+</schema>
+
+<table name="gps" layer="0" collapse-mode="2" max-obj-count="27">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<position x="580" y="1240"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="alarm" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="longitude" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="latitude" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="offset_lng" not-null="true" default-value="0">
+		<type name="float" length="0"/>
+	</column>
+	<column name="offset_lat" not-null="true" default-value="0">
+		<type name="float" length="0"/>
+	</column>
+	<column name="altitude" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[高度 单位 m]]></comment>
+	</column>
+	<column name="speed" not-null="true" default-value="0">
+		<type name="float" length="0"/>
+		<comment><![CDATA[gps 速度 km/h]]></comment>
+	</column>
+	<column name="direction" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[正北0 东 90 南180 西270 ]]></comment>
+	</column>
+	<column name="mileage" not-null="true" default-value="0">
+		<type name="float" length="0"/>
+	</column>
+	<column name="oil_mass">
+		<type name="float" length="0"/>
+	</column>
+	<column name="r_speed" not-null="true" default-value="0">
+		<type name="float" length="0"/>
+		<comment><![CDATA[记录仪速度]]></comment>
+	</column>
+	<column name="ext_signal" not-null="true" default-value="0">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[扩展信号]]></comment>
+	</column>
+	<column name="io_status">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="ad0">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="ad1">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="rssi">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[无线通信信号强度]]></comment>
+	</column>
+	<column name="gnss">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[卫星颗数]]></comment>
+	</column>
+	<column name="unknown">
+		<type name="jsonb" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="gps_pk" type="pk-constr" table="jt808.gps">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<partitioning type="RANGE">
+		<partitionkey>
+			<column name="utc"/>
+		</partitionkey>
+	</partitioning>
+</table>
+
+<table name="ic_record" layer="0" collapse-mode="2" max-obj-count="12">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<position x="840" y="1240"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="in_or_out" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="result" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="driver_name">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ic_qc">
+		<type name="text" length="0"/>
+		<comment><![CDATA[qualification certificate 从业资格证]]></comment>
+	</column>
+	<column name="ic_ca">
+		<type name="text" length="0"/>
+		<comment><![CDATA[发证机构名称]]></comment>
+	</column>
+	<column name="expiry_date">
+		<type name="text" length="0"/>
+		<comment><![CDATA[有效期]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="ic_record_pk" type="pk-constr" table="jt808.ic_record">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="media_event" layer="0" collapse-mode="2" max-obj-count="9">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<position x="840" y="1460"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="media_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="media_type" not-null="true" default-value="9">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 图像 1 音频 2 视频]]></comment>
+	</column>
+	<column name="encoding" not-null="true" default-value="9">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[编码格式 0 jpeg 1 tif 2 mp3 3 wav 4 wmv]]></comment>
+	</column>
+	<column name="event_type" not-null="true" default-value="9">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="channel" not-null="true" default-value="99">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="media_file_pk" type="pk-constr" table="jt808.media_event">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="media_file" layer="0" collapse-mode="2" max-obj-count="22">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<position x="1100" y="1260"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="media_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="file_type" not-null="true" default-value="9">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="encoding" not-null="true" default-value="9">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="event_type" not-null="true" default-value="9">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="channel" not-null="true" default-value="99">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="alarm" not-null="true" default-value="0">
+		<type name="int4" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="0">
+		<type name="int4" length="0"/>
+	</column>
+	<column name="longitude" not-null="true" default-value="0">
+		<type name="float" length="0"/>
+	</column>
+	<column name="latitude" not-null="true" default-value="0">
+		<type name="float" length="0"/>
+	</column>
+	<column name="offset_lng" not-null="true" default-value="0">
+		<type name="float" length="0"/>
+	</column>
+	<column name="offset_lat" not-null="true" default-value="0">
+		<type name="float" length="0"/>
+	</column>
+	<column name="altitude" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="speed" not-null="true" default-value="0">
+		<type name="float" length="0"/>
+	</column>
+	<column name="direction" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="path">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="media_file_pk" type="pk-constr" table="jt808.media_file">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
 </table>
 
 <constraint name="org_fk" type="fk-constr" comparison-type="MATCH FULL"
