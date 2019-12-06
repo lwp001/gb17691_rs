@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.2-beta2" last-position="0,384" last-zoom="1" max-obj-count="13"
+<dbmodel pgmodeler-ver="0.9.2-beta2" last-position="0,990" last-zoom="1" max-obj-count="16"
 	 default-schema="public" default-owner="gb17691">
 <role name="gb17691"
       createrole="true"
@@ -199,19 +199,19 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="vehicle" layer="0" collapse-mode="2" max-obj-count="16">
+<table name="vehicle" layer="0" collapse-mode="2" max-obj-count="24">
 	<schema name="public"/>
 	<role name="gb17691"/>
-	<position x="460" y="60"/>
+	<position x="500" y="60"/>
 	<column name="id" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>
 	<column name="vin" not-null="true">
 		<type name="text" length="0"/>
 	</column>
-	<column name="lpn" not-null="true">
+	<column name="lpn">
 		<type name="text" length="0"/>
-		<comment><![CDATA[license plate number]]></comment>
+		<comment><![CDATA[license plate number 车牌号]]></comment>
 	</column>
 	<column name="lpn_color">
 		<type name="smallint" length="0"/>
@@ -230,21 +230,32 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="text" length="0"/>
 		<comment><![CDATA[行政区划代码]]></comment>
 	</column>
-	<column name="lpn_classify">
+	<column name="division_nane">
+		<type name="text" length="0"/>
+		<comment><![CDATA[行政区划名称]]></comment>
+	</column>
+	<column name="vehicle_classify">
 		<type name="smallint" length="0"/>
-		<comment><![CDATA[车牌分类]]></comment>
+		<comment><![CDATA[车辆分类]]></comment>
 	</column>
 	<column name="trade_classify">
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[行业分类]]></comment>
 	</column>
-	<column name="service_start_date">
+	<column name="sim">
+		<type name="text" length="0"/>
+	</column>
+	<column name="service_start_date" not-null="true" default-value="current_date">
 		<type name="date" length="0"/>
 		<comment><![CDATA[服务开始时间]]></comment>
 	</column>
-	<column name="service_end_date">
+	<column name="service_end_date" not-null="true" default-value="current_date + interval '1 Y'">
 		<type name="date" length="0"/>
-		<comment><![CDATA[服务结束时间]]></comment>
+		<comment><![CDATA[服务结束时间 =start+1 year]]></comment>
+	</column>
+	<column name="auth_code">
+		<type name="text" length="0"/>
+		<comment><![CDATA[鉴权码]]></comment>
 	</column>
 	<column name="note">
 		<type name="text" length="0"/>
@@ -256,6 +267,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="created" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
 	</column>
+	<column name="created_by">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="updated">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="updated_by">
+		<type name="uuid" length="0"/>
+	</column>
 	<constraint name="vehicle_pk" type="pk-constr" table="public.vehicle">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
@@ -265,12 +285,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="lpn_unique" type="uq-constr" table="public.vehicle">
 		<columns names="lpn" ref-type="src-columns"/>
 	</constraint>
+	<constraint name="vehicle_sim_uq" type="uq-constr" table="public.vehicle">
+		<columns names="sim" ref-type="src-columns"/>
+	</constraint>
 </table>
 
 <table name="organize" layer="0" collapse-mode="2" max-obj-count="25">
 	<schema name="public"/>
 	<appended-sql><![CDATA[insert into organize(id,name,parent_id,parent_ids_path) values ('e9f23a09-86b0-4fad-9511-212a9367ec05','根节点','3862f172-5da8-4299-9e4b-805ee6b64c08','/e9f23a09-86b0-4fad-9511-212a9367ec05');]]></appended-sql>
-	<position x="880" y="126"/>
+	<position x="880" y="120"/>
 	<column name="id" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>
@@ -352,7 +375,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<schema name="public"/>
 	<appended-sql><![CDATA[INSERT INTO public.sys_user (id,account,password,name,org_id) VALUES (
 'e9f23a09-86b0-4fad-9511-212a9367ec05','admin','$2b$12$kIUzOsVzJG1Mnep8/yOwJ.8D3WxZOI2cRHS6/BZrK5GvsQHTk/OaG','admin','e9f23a09-86b0-4fad-9511-212a9367ec05');]]></appended-sql>
-	<position x="440" y="541"/>
+	<position x="440" y="540"/>
 	<column name="id" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>
@@ -599,7 +622,7 @@ end;
 <table name="org_tree_path" layer="0" collapse-mode="2" max-obj-count="3">
 	<schema name="public"/>
 	<role name="gb17691"/>
-	<position x="886" y="9"/>
+	<position x="880" y="0"/>
 	<column name="ancestor" not-null="true">
 		<type name="uuid" length="0"/>
 		<comment><![CDATA[祖先]]></comment>
@@ -659,7 +682,7 @@ end;
 	<type name="trigger" length="0"/>
 	</return-type>
 	<definition><![CDATA[begin
-         update organize  set  childs=childs-1 where id=new.parent_id;
+         update organize  set  childs=childs-1 where id=old.parent_id;
 	       return null;
 end;
 ]]></definition>
@@ -670,6 +693,173 @@ end;
 	 table="public.organize">
 		<function signature="public.fn_org_del()"/>
 </trigger>
+
+<table name="china_region" layer="0" collapse-mode="2" max-obj-count="4">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="80" y="1040"/>
+	<column name="code" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="level" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="parent_code" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="china_region_pk" type="pk-constr" table="public.china_region">
+		<columns names="code" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="sys_dict_data" layer="0" collapse-mode="2" max-obj-count="8">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="80" y="1400"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="code" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[类型代码]]></comment>
+	</column>
+	<column name="dict_key" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="dict_name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="is_default" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 not 1 yes]]></comment>
+	</column>
+	<column name="status" not-null="true" default-value="1">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 freeze 1 active]]></comment>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="sys_dict_data_pk" type="pk-constr" table="public.sys_dict_data">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<initial-data>
+<![CDATA[code•dict_key•dict_name•is_default⸣
+vehicle_classify•10•客车•0⸣
+vehicle_classify•11•大型客车•0⸣
+vehicle_classify•12•中型客车•0⸣
+vehicle_classify•13•小型客车•0⸣
+vehicle_classify•14•轿车•0⸣
+vehicle_classify•15•大型卧铺客车•0⸣
+vehicle_classify•16•中型卧铺客车•0⸣
+vehicle_classify•20•普通货车•0⸣
+vehicle_classify•21•大型普通货车•1⸣
+vehicle_classify•22•中型普通货车•0⸣
+vehicle_classify•23•小型普通货车•0⸣
+vehicle_classify•30•专用运输车•0⸣
+vehicle_classify•31•集装箱车•0⸣
+vehicle_classify•32•大件运输车•0⸣
+vehicle_classify•33•保温冷藏车•0⸣
+vehicle_classify•34•商品车运输专用车•0⸣
+vehicle_classify•35•罐车•0⸣
+vehicle_classify•36•牵引车•0⸣
+vehicle_classify•37•挂车•0⸣
+vehicle_classify•38•平板车•0⸣
+vehicle_classify•39•其他专用车•0⸣
+vehicle_classify•40•危险品运输车•0⸣
+vehicle_classify•50•农用车•0⸣
+vehicle_classify•60•拖拉机•0⸣
+vehicle_classify•61•轮式拖拉机•0⸣
+vehicle_classify•62•手扶拖拉机•0⸣
+vehicle_classify•63•履带拖拉机•0⸣
+vehicle_classify•64•特种拖拉机•0⸣
+vehicle_classify•90•其他车辆•0⸣
+trade_classify•10•旅客运输•0⸣
+trade_classify•11•班车客运•0⸣
+trade_classify•12•包车客运•0⸣
+trade_classify•13•定线旅游•0⸣
+trade_classify•14•非定线旅游•0⸣
+trade_classify•20•货物运输•0⸣
+trade_classify•21•普通货物运输•1⸣
+trade_classify•22•专用运输•0⸣
+trade_classify•23•大型物件运输•0⸣
+trade_classify•30•危险货物运输•0⸣
+trade_classify•31•营运性危险货物运输•0⸣
+trade_classify•32•非营运性危险货物运输•0⸣
+trade_classify•40•机动车维修•0⸣
+trade_classify•41•汽车维修•0⸣
+trade_classify•42•危险货物运输车辆维修•0⸣
+trade_classify•43•摩托车维修•0⸣
+trade_classify•44•其他机动车维修•0⸣
+trade_classify•50•机动车驾驶员培训•0⸣
+trade_classify•51•普通机动车驾驶员培训•0⸣
+trade_classify•52•运输驾驶员从业资格培训•0⸣
+trade_classify•53•机动车驾驶员培训教练场•0⸣
+trade_classify•60•战场服务•0⸣
+trade_classify•61•旅客运输站•0⸣
+trade_classify•62•货运站•0⸣
+trade_classify•70•国际运输•0⸣
+trade_classify•71•国际旅客运输•0⸣
+trade_classify•72•国际货物运输•0⸣
+trade_classify•80•公交运输•0⸣
+trade_classify•81•公交运输•0⸣
+trade_classify•90•出租运输•0⸣
+trade_classify•91•客运出租运输•0⸣
+trade_classify•92•货运出租运输•0⸣
+trade_classify•100•汽车租赁•0⸣
+trade_classify•101•客运汽车租赁•0⸣
+trade_classify•102•货运汽车租赁•0⸣
+fule_type•1•汽油•0⸣
+fule_type•2•柴油•1⸣
+fule_type•3•天然气•0⸣
+fule_type•4•液化气•0⸣
+fule_type•5•电动•0⸣
+fule_type•9•其他•0⸣
+lpn_color•1•蓝色•0⸣
+lpn_color•2•黄色•1⸣
+lpn_color•3•黑色•0⸣
+lpn_color•4•白色•0⸣
+lpn_color•9•其他•0]]>
+	</initial-data>
+</table>
+
+<table name="sys_dict_type" layer="0" collapse-mode="2" max-obj-count="4">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="80" y="1180"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="code">
+		<type name="text" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="1">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0  freeze 1 active]]></comment>
+	</column>
+	<constraint name="sys_dict_type_pk" type="pk-constr" table="public.sys_dict_type">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="dict_code_un" type="uq-constr" table="public.sys_dict_type">
+		<columns names="code" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="dict_type_name_uq" type="uq-constr" table="public.sys_dict_type">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+	<initial-data>
+<![CDATA[name•code⸣
+车牌颜色•lpn_color⸣
+车辆类型•vehicle_classify⸣
+运输行业类型•trade_classify⸣
+燃料类型•fule_type]]>
+	</initial-data>
+</table>
 
 <constraint name="org_fk" type="fk-constr" comparison-type="MATCH FULL"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.organize" table="public.vehicle">
@@ -695,6 +885,12 @@ end;
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
+<constraint name="fk_dict_type" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_dict_type" table="public.sys_dict_data">
+	<columns names="code" ref-type="src-columns"/>
+	<columns names="code" ref-type="dst-columns"/>
+</constraint>
+
 <relationship name="rel_vehicle_sys_organize" type="relfk" layer="0"
 	 src-table="public.vehicle"
 	 dst-table="public.organize" reference-fk="org_fk"
@@ -717,6 +913,11 @@ end;
 <relationship name="rel_sys_relation_sys_organize" type="relfk" layer="0"
 	 src-table="public.user_resource"
 	 dst-table="public.organize" reference-fk="fk_resource_org"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_sys_dict_data_sys_dict_type" type="relfk" layer="0"
+	 src-table="public.sys_dict_data"
+	 dst-table="public.sys_dict_type" reference-fk="fk_dict_type"
 	 src-required="false" dst-required="false"/>
 
 </dbmodel>
