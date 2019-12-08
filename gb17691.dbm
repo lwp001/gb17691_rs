@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.2-beta2" last-position="0,826" last-zoom="1" max-obj-count="21"
+<dbmodel pgmodeler-ver="0.9.2-beta2" last-position="0,0" last-zoom="1" max-obj-count="21"
 	 default-schema="public" default-owner="gb17691">
 <role name="gb17691"
       createrole="true"
@@ -202,18 +202,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="vehicle" layer="0" collapse-mode="2" max-obj-count="24">
 	<schema name="public"/>
 	<role name="gb17691"/>
-	<position x="500" y="60"/>
+	<position x="520" y="60"/>
 	<column name="id" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>
 	<column name="vin" not-null="true">
 		<type name="text" length="0"/>
 	</column>
-	<column name="lpn">
+	<column name="lpn" not-null="true">
 		<type name="text" length="0"/>
 		<comment><![CDATA[license plate number 车牌号]]></comment>
 	</column>
-	<column name="lpn_color">
+	<column name="lpn_color" not-null="true" default-value="2">
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[license plate color
 2 yellow]]></comment>
@@ -226,23 +226,23 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="uuid" length="0"/>
 		<comment><![CDATA[车型 vehicle models id]]></comment>
 	</column>
-	<column name="division_code">
-		<type name="text" length="0"/>
+	<column name="division_code" not-null="true">
+		<type name="integer" length="0"/>
 		<comment><![CDATA[行政区划代码]]></comment>
 	</column>
 	<column name="division_nane">
 		<type name="text" length="0"/>
 		<comment><![CDATA[行政区划名称]]></comment>
 	</column>
-	<column name="vehicle_classify">
+	<column name="vehicle_classify" not-null="true">
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[车辆分类]]></comment>
 	</column>
-	<column name="trade_classify">
+	<column name="trade_classify" not-null="true">
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[行业分类]]></comment>
 	</column>
-	<column name="sim">
+	<column name="sim" not-null="true">
 		<type name="text" length="0"/>
 	</column>
 	<column name="service_start_date" not-null="true" default-value="current_date">
@@ -267,10 +267,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="created" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
 	</column>
-	<column name="created_by">
+	<column name="created_by" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>
-	<column name="updated">
+	<column name="updated" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
 	</column>
 	<column name="updated_by">
