@@ -168,7 +168,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<role name="gb17691"/>
 	<position x="60" y="800"/>
 	<column name="id" not-null="true">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 	</column>
 	<column name="vin" not-null="true">
 		<type name="text" length="0"/>
@@ -199,12 +199,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="vehicle" layer="0" collapse-mode="2" max-obj-count="24">
+<table name="vehicle" layer="0" collapse-mode="2" max-obj-count="25">
 	<schema name="public"/>
 	<role name="gb17691"/>
 	<position x="520" y="60"/>
 	<column name="id" not-null="true">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 	</column>
 	<column name="vin" not-null="true">
 		<type name="text" length="0"/>
@@ -219,7 +219,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 2 yellow]]></comment>
 	</column>
 	<column name="org_id" not-null="true">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 		<comment><![CDATA[organization id]]></comment>
 	</column>
 	<column name="model_id">
@@ -243,7 +243,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<comment><![CDATA[行业分类]]></comment>
 	</column>
 	<column name="sim" not-null="true">
-		<type name="text" length="0"/>
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="real_sim" not-null="true" default-value="0">
+		<type name="bigint" length="0"/>
 	</column>
 	<column name="service_start_date" not-null="true" default-value="current_date">
 		<type name="date" length="0"/>
@@ -268,13 +271,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="timestamptz" length="0"/>
 	</column>
 	<column name="created_by" not-null="true">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 	</column>
 	<column name="updated" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
 	</column>
 	<column name="updated_by">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 	</column>
 	<constraint name="vehicle_pk" type="pk-constr" table="public.vehicle">
 		<columns names="id" ref-type="src-columns"/>
@@ -292,16 +295,17 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="organize" layer="0" collapse-mode="2" max-obj-count="25">
 	<schema name="public"/>
-	<appended-sql><![CDATA[insert into organize(id,name,parent_id,parent_ids_path) values ('e9f23a09-86b0-4fad-9511-212a9367ec05','根节点','3862f172-5da8-4299-9e4b-805ee6b64c08','/e9f23a09-86b0-4fad-9511-212a9367ec05');]]></appended-sql>
+	<appended-sql><![CDATA[INSERT INTO organize (id, name, parent_id, parent_ids_path, serial_id) 
+VALUES (E'0', E'根节点', E'0', '/0', DEFAULT);]]></appended-sql>
 	<position x="880" y="120"/>
 	<column name="id" not-null="true">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 	</column>
 	<column name="name" not-null="true">
 		<type name="text" length="0"/>
 	</column>
 	<column name="parent_id" not-null="true">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 	</column>
 	<column name="parent_ids_path" not-null="true" default-value="'/'">
 		<type name="text" length="0"/>
@@ -346,15 +350,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[ 1 normal  0 freeze]]></comment>
 	</column>
-	<column name="created_by">
-		<type name="uuid" length="0"/>
+	<column name="created_by" not-null="true">
+		<type name="int8" length="0"/>
 		<comment><![CDATA[创建者]]></comment>
 	</column>
 	<column name="created" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
 	</column>
 	<column name="updated_by">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 	</column>
 	<column name="updated" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
@@ -373,11 +377,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="sys_user" layer="0" collapse-mode="2" max-obj-count="14">
 	<schema name="public"/>
-	<appended-sql><![CDATA[INSERT INTO public.sys_user (id,account,password,name,org_id) VALUES (
-'e9f23a09-86b0-4fad-9511-212a9367ec05','admin','$2b$12$kIUzOsVzJG1Mnep8/yOwJ.8D3WxZOI2cRHS6/BZrK5GvsQHTk/OaG','admin','e9f23a09-86b0-4fad-9511-212a9367ec05');]]></appended-sql>
 	<position x="440" y="540"/>
 	<column name="id" not-null="true">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 	</column>
 	<column name="account" not-null="true">
 		<type name="text" length="0"/>
@@ -389,7 +391,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="text" length="0"/>
 	</column>
 	<column name="org_id" not-null="true">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 	</column>
 	<column name="sex" not-null="true" default-value="0">
 		<type name="smallint" length="0"/>
@@ -419,6 +421,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="account_unique" type="uq-constr" table="public.sys_user">
 		<columns names="account" ref-type="src-columns"/>
 	</constraint>
+	<initial-data>
+<![CDATA[id•account•password•name•org_id•created⸣
+0•admin•'$2b$12$kIUzOsVzJG1Mnep8/yOwJ.8D3WxZOI2cRHS6/BZrK5GvsQHTk/OaG'•admin•0•]]>
+	</initial-data>
 </table>
 
 <table name="user_resource" layer="0" collapse-mode="2" max-obj-count="6">
@@ -429,10 +435,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="serial" length="0"/>
 	</column>
 	<column name="user_id" not-null="true">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 	</column>
 	<column name="resource_id" not-null="true">
-		<type name="uuid" length="0"/>
+		<type name="int8" length="0"/>
 		<comment><![CDATA[资源ID]]></comment>
 	</column>
 	<column name="type">
