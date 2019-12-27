@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.2-beta2" last-position="0,0" last-zoom="1" max-obj-count="21"
+<dbmodel pgmodeler-ver="0.9.2-beta2" last-position="0,965" last-zoom="1" max-obj-count="21"
 	 default-schema="public" default-owner="gb17691">
 <role name="gb17691"
       createrole="true"
@@ -223,7 +223,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<comment><![CDATA[organization id]]></comment>
 	</column>
 	<column name="model_id">
-		<type name="uuid" length="0"/>
+		<type name="bigint" length="0"/>
 		<comment><![CDATA[车型 vehicle models id]]></comment>
 	</column>
 	<column name="division_code" not-null="true">
@@ -256,8 +256,8 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="date" length="0"/>
 		<comment><![CDATA[服务结束时间 =start+1 year]]></comment>
 	</column>
-	<column name="auth_code">
-		<type name="text" length="0"/>
+	<column name="auth_code" not-null="true" default-value="next_id()">
+		<type name="bigint" length="0"/>
 		<comment><![CDATA[鉴权码]]></comment>
 	</column>
 	<column name="note">
@@ -877,7 +877,11 @@ lpn_color•9•其他•0]]>
 <table name="gps" layer="0" collapse-mode="2" max-obj-count="27">
 	<schema name="jt808"/>
 	<role name="gb17691"/>
-	<position x="580" y="1240"/>
+	<appended-sql><![CDATA[CREATE TABLE p_gps_1912 PARTITION OF gps  FOR VALUES FROM ('2019-12-01') TO ('2020-01-01');
+CREATE TABLE p_gps_2001 PARTITION OF gps  FOR VALUES FROM ('2020-01-01') TO ('2020-02-01');
+CREATE TABLE p_gps_2002 PARTITION OF gps  FOR VALUES FROM ('2020-02-01') TO ('2020-03-01');
+CREATE TABLE p_gps   PARTITION OF gps   DEFAULT;]]></appended-sql>
+	<position x="600" y="1240"/>
 	<column name="id" not-null="true">
 		<type name="bigserial" length="0"/>
 	</column>
@@ -900,17 +904,17 @@ lpn_color•9•其他•0]]>
 		<type name="float4" length="0"/>
 	</column>
 	<column name="offset_lng" not-null="true" default-value="0">
-		<type name="float" length="0"/>
+		<type name="float4" length="0"/>
 	</column>
 	<column name="offset_lat" not-null="true" default-value="0">
-		<type name="float" length="0"/>
+		<type name="float4" length="0"/>
 	</column>
 	<column name="altitude" not-null="true" default-value="0">
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[高度 单位 m]]></comment>
 	</column>
 	<column name="speed" not-null="true" default-value="0">
-		<type name="float" length="0"/>
+		<type name="float4" length="0"/>
 		<comment><![CDATA[gps 速度 km/h]]></comment>
 	</column>
 	<column name="direction" not-null="true" default-value="0">
@@ -918,33 +922,33 @@ lpn_color•9•其他•0]]>
 		<comment><![CDATA[正北0 东 90 南180 西270 ]]></comment>
 	</column>
 	<column name="mileage" not-null="true" default-value="0">
-		<type name="float" length="0"/>
+		<type name="float4" length="0"/>
 	</column>
-	<column name="oil_mass">
-		<type name="float" length="0"/>
+	<column name="oil_mass" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
 	</column>
 	<column name="r_speed" not-null="true" default-value="0">
-		<type name="float" length="0"/>
+		<type name="float4" length="0"/>
 		<comment><![CDATA[记录仪速度]]></comment>
 	</column>
 	<column name="ext_signal" not-null="true" default-value="0">
 		<type name="int4" length="0"/>
 		<comment><![CDATA[扩展信号]]></comment>
 	</column>
-	<column name="io_status">
+	<column name="io_status" not-null="true" default-value="0">
 		<type name="smallint" length="0"/>
 	</column>
-	<column name="ad0">
+	<column name="ad0" not-null="true" default-value="0">
 		<type name="smallint" length="0"/>
 	</column>
-	<column name="ad1">
+	<column name="ad1" not-null="true" default-value="0">
 		<type name="smallint" length="0"/>
 	</column>
-	<column name="rssi">
+	<column name="rssi" not-null="true" default-value="0">
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[无线通信信号强度]]></comment>
 	</column>
-	<column name="gnss">
+	<column name="gnss" not-null="true" default-value="0">
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[卫星颗数]]></comment>
 	</column>
@@ -955,7 +959,7 @@ lpn_color•9•其他•0]]>
 		<type name="timestamptz" length="0"/>
 	</column>
 	<constraint name="gps_pk" type="pk-constr" table="jt808.gps">
-		<columns names="id" ref-type="src-columns"/>
+		<columns names="id,utc" ref-type="src-columns"/>
 	</constraint>
 	<partitioning type="RANGE">
 		<partitionkey>
@@ -1106,6 +1110,45 @@ lpn_color•9•其他•0]]>
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 </table>
+
+<function name="next_id"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql" sql-disabled="true"/>
+	<return-type>
+	<type name="bigint" length="0"/>
+	</return-type>
+	<parameter name="result" out="true">
+		<type name="bigint" length="0"/>
+	</parameter>
+	<definition><![CDATA[DECLARE
+    our_epoch bigint := 1314220021721;
+    seq_id bigint;
+    now_millis bigint;
+    shard_id int := 5;
+BEGIN
+    -- there is a typo here in the online example, which is corrected here
+    SELECT nextval('seq_auth_code') % 1024 INTO seq_id;
+
+    SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis;
+    result := (now_millis - our_epoch) << 23;
+    result := result | (shard_id << 10);
+    result := result | (seq_id);
+END;]]></definition>
+</function>
+
+<sequence name="seq_auth_code" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[验证码序列]]></comment>
+</sequence>
 
 <constraint name="org_fk" type="fk-constr" comparison-type="MATCH FULL"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.organize" table="public.vehicle">
