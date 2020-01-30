@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.2-beta2" last-position="0,965" last-zoom="1" max-obj-count="21"
+<dbmodel pgmodeler-ver="0.9.2" last-position="0,915" last-zoom="1" max-obj-count="21"
 	 default-schema="public" default-owner="gb17691">
 <role name="gb17691"
       createrole="true"
@@ -199,9 +199,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="vehicle" layer="0" collapse-mode="2" max-obj-count="25">
+<table name="vehicle" layer="0" collapse-mode="2" max-obj-count="27">
 	<schema name="public"/>
 	<role name="gb17691"/>
+	<comment><![CDATA[添加修改删除车辆时 需要将该操作进行发布]]></comment>
 	<position x="520" y="60"/>
 	<column name="id" not-null="true">
 		<type name="int8" length="0"/>
@@ -214,7 +215,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<comment><![CDATA[license plate number 车牌号]]></comment>
 	</column>
 	<column name="lpn_color" not-null="true" default-value="2">
-		<type name="smallint" length="0"/>
+		<type name="text" length="0"/>
 		<comment><![CDATA[license plate color
 2 yellow]]></comment>
 	</column>
@@ -230,22 +231,22 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="integer" length="0"/>
 		<comment><![CDATA[行政区划代码]]></comment>
 	</column>
-	<column name="division_nane">
+	<column name="division_name">
 		<type name="text" length="0"/>
 		<comment><![CDATA[行政区划名称]]></comment>
 	</column>
 	<column name="vehicle_classify" not-null="true">
-		<type name="smallint" length="0"/>
+		<type name="text" length="0"/>
 		<comment><![CDATA[车辆分类]]></comment>
 	</column>
 	<column name="trade_classify" not-null="true">
-		<type name="smallint" length="0"/>
+		<type name="text" length="0"/>
 		<comment><![CDATA[行业分类]]></comment>
 	</column>
 	<column name="sim" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
-	<column name="real_sim" not-null="true" default-value="0">
+	<column name="real_sim">
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="service_start_date" not-null="true" default-value="current_date">
@@ -258,7 +259,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<column name="auth_code" not-null="true" default-value="next_id()">
 		<type name="bigint" length="0"/>
-		<comment><![CDATA[鉴权码]]></comment>
+		<comment><![CDATA[鉴权码 编辑车辆信息时如果 vin 或车牌号 更换 需要更换鉴权码]]></comment>
+	</column>
+	<column name="owner">
+		<type name="text" length="0"/>
+	</column>
+	<column name="owner_phone">
+		<type name="bigint" length="0"/>
 	</column>
 	<column name="note">
 		<type name="text" length="0"/>
@@ -874,12 +881,13 @@ lpn_color•9•其他•0]]>
 	<role name="gb17691"/>
 </schema>
 
-<table name="gps" layer="0" collapse-mode="2" max-obj-count="27">
+<table name="gps" layer="0" collapse-mode="2" max-obj-count="32">
 	<schema name="jt808"/>
 	<role name="gb17691"/>
-	<appended-sql><![CDATA[CREATE TABLE p_gps_1912 PARTITION OF gps  FOR VALUES FROM ('2019-12-01') TO ('2020-01-01');
+	<appended-sql><![CDATA[
 CREATE TABLE p_gps_2001 PARTITION OF gps  FOR VALUES FROM ('2020-01-01') TO ('2020-02-01');
 CREATE TABLE p_gps_2002 PARTITION OF gps  FOR VALUES FROM ('2020-02-01') TO ('2020-03-01');
+CREATE TABLE p_gps_2003 PARTITION OF gps  FOR VALUES FROM ('2020-03-01') TO ('2020-04-01');
 CREATE TABLE p_gps   PARTITION OF gps   DEFAULT;]]></appended-sql>
 	<position x="600" y="1240"/>
 	<column name="id" not-null="true">
@@ -897,11 +905,13 @@ CREATE TABLE p_gps   PARTITION OF gps   DEFAULT;]]></appended-sql>
 	<column name="status" not-null="true" default-value="0">
 		<type name="integer" length="0"/>
 	</column>
-	<column name="longitude" not-null="true" default-value="0">
+	<column name="lng" not-null="true" default-value="0">
 		<type name="float4" length="0"/>
+		<comment><![CDATA[longitude]]></comment>
 	</column>
-	<column name="latitude" not-null="true" default-value="0">
+	<column name="lat" not-null="true" default-value="0">
 		<type name="float4" length="0"/>
+		<comment><![CDATA[latitude]]></comment>
 	</column>
 	<column name="offset_lng" not-null="true" default-value="0">
 		<type name="float4" length="0"/>
@@ -921,39 +931,54 @@ CREATE TABLE p_gps   PARTITION OF gps   DEFAULT;]]></appended-sql>
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[正北0 东 90 南180 西270 ]]></comment>
 	</column>
-	<column name="mileage" not-null="true" default-value="0">
+	<column name="mileage">
 		<type name="float4" length="0"/>
 	</column>
-	<column name="oil_mass" not-null="true" default-value="0">
+	<column name="oil_mass">
 		<type name="float4" length="0"/>
 	</column>
-	<column name="r_speed" not-null="true" default-value="0">
+	<column name="r_speed">
 		<type name="float4" length="0"/>
 		<comment><![CDATA[记录仪速度]]></comment>
 	</column>
-	<column name="ext_signal" not-null="true" default-value="0">
+	<column name="firm_alarm_id">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="tire_pressure">
+		<type name="text" length="0"/>
+		<comment><![CDATA[胎压]]></comment>
+	</column>
+	<column name="carriage_temperature">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[车厢温度]]></comment>
+	</column>
+	<column name="ext_signal">
 		<type name="int4" length="0"/>
 		<comment><![CDATA[扩展信号]]></comment>
 	</column>
-	<column name="io_status" not-null="true" default-value="0">
+	<column name="io_status">
 		<type name="smallint" length="0"/>
 	</column>
-	<column name="ad0" not-null="true" default-value="0">
+	<column name="ad0">
 		<type name="smallint" length="0"/>
 	</column>
-	<column name="ad1" not-null="true" default-value="0">
+	<column name="ad1">
 		<type name="smallint" length="0"/>
 	</column>
-	<column name="rssi" not-null="true" default-value="0">
+	<column name="rssi">
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[无线通信信号强度]]></comment>
 	</column>
-	<column name="gnss" not-null="true" default-value="0">
+	<column name="gnss">
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[卫星颗数]]></comment>
 	</column>
-	<column name="unknown">
-		<type name="jsonb" length="0"/>
+	<column name="ext_data">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ver" not-null="true" default-value="2013">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[版本]]></comment>
 	</column>
 	<column name="created" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
@@ -1149,6 +1174,135 @@ END;]]></definition>
 	<role name="gb17691"/>
 	<comment><![CDATA[验证码序列]]></comment>
 </sequence>
+
+<function name="fn_vehicle_del"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql" sql-disabled="true"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[begin
+         --update organize  set  vehicle_count=vehicle_count+1 where id=new.org_id;
+		update organize set vehicle_count=vehicle_count-1 where id::TEXT in(
+				SELECT regexp_split_to_table(parent_ids_path, '/') FROM organize 
+				WHERE id=old.org_id
+		);
+	    return null;
+end;]]></definition>
+</function>
+
+<function name="fn_vehicle_add"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql" sql-disabled="true"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[begin
+         --update organize  set  vehicle_count=vehicle_count+1 where id=new.org_id;
+		update organize set vehicle_count=vehicle_count+1 where id::TEXT in(
+				SELECT regexp_split_to_table(parent_ids_path, '/') FROM organize 
+				WHERE id=new.org_id
+		);
+	    return null;
+end;]]></definition>
+</function>
+
+<trigger name="tr_vehicle_add" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="true" del-event="false" upd-event="false" trunc-event="false"
+	 table="public.vehicle">
+		<function signature="public.fn_vehicle_add()"/>
+</trigger>
+
+<trigger name="tr_vehicle_del" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="false" del-event="true" upd-event="false" trunc-event="false"
+	 table="public.vehicle">
+		<function signature="public.fn_vehicle_del()"/>
+</trigger>
+
+<function name="fn_vehicle_update_orgid"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql" sql-disabled="true"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[begin
+         --update organize  set  vehicle_count=vehicle_count+1 where id=new.org_id;
+	   if old.org_id != new.org_id then
+			-- 调入组+1
+			update organize set vehicle_count=vehicle_count+1 where id::TEXT in(
+					SELECT regexp_split_to_table(parent_ids_path, '/') FROM organize 
+					WHERE id=new.org_id
+			);
+			-- 调出组-1
+			update organize set vehicle_count=vehicle_count-1 where id::TEXT in(
+					SELECT regexp_split_to_table(parent_ids_path, '/') FROM organize 
+					WHERE id=old.org_id
+			);
+		end if;
+	    return null;
+end;]]></definition>
+</function>
+
+<trigger name="tr_vehicle_update_orgid" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="false" del-event="false" upd-event="true" trunc-event="false"
+	 table="public.vehicle">
+		<function signature="public.fn_vehicle_update_orgid()"/>
+		<columns names="org_id"/>
+</trigger>
+
+<function name="fn_vehicle_update_register_info"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql" sql-disabled="true"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[begin	
+	--修改车辆上线信息 需要更新鉴权码 迫使车辆重新注册
+		if old.lpn != new.lpn or old.vin != new.vin or old.sim != new.sim then
+			update vehicle set auth_code=next_id() where id= old.id;
+		end if;
+		return null;
+end;]]></definition>
+</function>
+
+<trigger name="tr_vehicle_update_register_info" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="false" del-event="false" upd-event="true" trunc-event="false"
+	 table="public.vehicle">
+		<function signature="public.fn_vehicle_update_register_info()"/>
+		<columns names="lpn,vin,sim"/>
+</trigger>
 
 <constraint name="org_fk" type="fk-constr" comparison-type="MATCH FULL"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.organize" table="public.vehicle">
