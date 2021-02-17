@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.3-beta" use-changelog="false" last-position="0,809" last-zoom="1.25" max-obj-count="32"
+<dbmodel pgmodeler-ver="0.9.3-beta" use-changelog="false" last-position="553,1064" last-zoom="1.25" max-obj-count="36"
 	 default-schema="public" default-owner="gb17691">
 <role name="gb17691"
       createrole="true"
@@ -1826,6 +1826,106 @@ insert into sys_user_role values ('2', '2292295943954895981');]]></appended-sql>
 	</constraint>
 </table>
 
+<table name="terminal_supplier" layer="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[终端供应商信息]]></comment>
+	<position x="1740" y="2120"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="code" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="address">
+		<type name="text" length="0"/>
+		<comment><![CDATA[地址]]></comment>
+	</column>
+	<column name="linker">
+		<type name="text" length="0"/>
+		<comment><![CDATA[联系人]]></comment>
+	</column>
+	<column name="phone">
+		<type name="text" length="0"/>
+	</column>
+	<column name="email">
+		<type name="text" length="0"/>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+		<comment><![CDATA[备注]]></comment>
+	</column>
+	<constraint name="terminal_supplier_pk" type="pk-constr" table="public.terminal_supplier">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="terminal_model" layer="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[终端型号]]></comment>
+	<position x="2220" y="2140"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="supplier_id" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[供应商ID]]></comment>
+	</column>
+	<constraint name="terminal_model_pk" type="pk-constr" table="public.terminal_model">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="jt808_register" layer="0" collapse-mode="2" max-obj-count="10" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[注册信息表]]></comment>
+	<position x="2140" y="1760"/>
+	<column name="sim" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="vin">
+		<type name="text" length="0"/>
+		<comment><![CDATA[车辆标识]]></comment>
+	</column>
+	<column name="province">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[省域]]></comment>
+	</column>
+	<column name="city">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[市域]]></comment>
+	</column>
+	<column name="producer">
+		<type name="text" length="0"/>
+		<comment><![CDATA[制造商]]></comment>
+	</column>
+	<column name="terminal_model">
+		<type name="text" length="0"/>
+		<comment><![CDATA[终端型号]]></comment>
+	</column>
+	<column name="terminal_id">
+		<type name="text" length="0"/>
+		<comment><![CDATA[终端ID/编号]]></comment>
+	</column>
+	<column name="color">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="updated" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="jt808_register_pk" type="pk-constr" table="public.jt808_register">
+		<columns names="sim" ref-type="src-columns"/>
+	</constraint>
+</table>
+
 <constraint name="org_fk" type="fk-constr" comparison-type="MATCH FULL"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.organize" table="public.vehicle">
 	<columns names="org_id" ref-type="src-columns"/>
@@ -1895,6 +1995,12 @@ insert into sys_user_role values ('2', '2292295943954895981');]]></appended-sql>
 <constraint name="fk_vl_lid" type="fk-constr" comparison-type="MATCH FULL"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="jt808.linker" table="jt808.vehicle_linker">
 	<columns names="linker_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_supplier_id" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.terminal_supplier" table="public.terminal_model">
+	<columns names="supplier_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
@@ -1972,6 +2078,11 @@ insert into sys_user_role values ('2', '2292295943954895981');]]></appended-sql>
 <relationship name="rel_media_file_vehicle" type="relfk" layer="0"
 	 src-table="jt808.media_file"
 	 dst-table="public.vehicle" reference-fk="fk_mf_lpn"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_terminal_model_terminal_supplier" type="relfk" layer="0"
+	 src-table="public.terminal_model"
+	 dst-table="public.terminal_supplier" reference-fk="fk_supplier_id"
 	 src-required="false" dst-required="true"/>
 
 </dbmodel>
