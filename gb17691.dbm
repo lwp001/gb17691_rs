@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.3-beta" use-changelog="false" last-position="553,1064" last-zoom="1.25" max-obj-count="36"
+<dbmodel pgmodeler-ver="0.9.3-beta" use-changelog="false" last-position="967,0" last-zoom="1.25" max-obj-count="36"
 	 default-schema="public" default-owner="gb17691">
 <role name="gb17691"
       createrole="true"
@@ -212,7 +212,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="vehicle" layer="0" collapse-mode="2" max-obj-count="27" z-value="0">
+<table name="vehicle" layer="0" collapse-mode="2" max-obj-count="30" z-value="0">
 	<schema name="public"/>
 	<role name="gb17691"/>
 	<comment><![CDATA[添加修改删除车辆时 需要将该操作进行发布]]></comment>
@@ -228,7 +228,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<comment><![CDATA[license plate number 车牌号]]></comment>
 	</column>
 	<column name="lpn_color" not-null="true" default-value="2">
-		<type name="text" length="0"/>
+		<type name="int2" length="0"/>
 		<comment><![CDATA[license plate color
 2 yellow]]></comment>
 	</column>
@@ -257,10 +257,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<comment><![CDATA[行业分类]]></comment>
 	</column>
 	<column name="sim" not-null="true">
-		<type name="bigint" length="0"/>
+		<type name="text" length="0"/>
 	</column>
 	<column name="real_sim">
-		<type name="bigint" length="0"/>
+		<type name="text" length="0"/>
 	</column>
 	<column name="service_start_date" not-null="true" default-value="current_date">
 		<type name="date" length="0"/>
@@ -278,7 +278,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="text" length="0"/>
 	</column>
 	<column name="owner_phone">
-		<type name="bigint" length="0"/>
+		<type name="text" length="0"/>
 	</column>
 	<column name="status" not-null="true" default-value="1">
 		<type name="smallint" length="0"/>
@@ -298,6 +298,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<column name="updated" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="terminal_id">
+		<type name="text" length="0"/>
+		<comment><![CDATA[终端ID/编号]]></comment>
+	</column>
+	<column name="terminal_model_id">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[终端型号]]></comment>
 	</column>
 	<constraint name="vehicle_pk" type="pk-constr" table="public.vehicle">
 		<columns names="id" ref-type="src-columns"/>
@@ -1830,7 +1838,7 @@ insert into sys_user_role values ('2', '2292295943954895981');]]></appended-sql>
 	<schema name="public"/>
 	<role name="gb17691"/>
 	<comment><![CDATA[终端供应商信息]]></comment>
-	<position x="1740" y="2120"/>
+	<position x="1740" y="2040"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -1861,9 +1869,16 @@ insert into sys_user_role values ('2', '2292295943954895981');]]></appended-sql>
 	<constraint name="terminal_supplier_pk" type="pk-constr" table="public.terminal_supplier">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+	<constraint name="unq_supplier_code" type="uq-constr" table="public.terminal_supplier">
+		<columns names="code" ref-type="src-columns"/>
+		<comment><![CDATA[供应商代码唯一约束]]></comment>
+	</constraint>
+	<constraint name="unq_supplier_nam" type="uq-constr" table="public.terminal_supplier">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
 </table>
 
-<table name="terminal_model" layer="0" collapse-mode="2" max-obj-count="3" z-value="0">
+<table name="terminal_model" layer="0" collapse-mode="2" max-obj-count="4" z-value="0">
 	<schema name="public"/>
 	<role name="gb17691"/>
 	<comment><![CDATA[终端型号]]></comment>
@@ -1878,8 +1893,15 @@ insert into sys_user_role values ('2', '2292295943954895981');]]></appended-sql>
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[供应商ID]]></comment>
 	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
 	<constraint name="terminal_model_pk" type="pk-constr" table="public.terminal_model">
 		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="unq_model_name" type="uq-constr" table="public.terminal_model">
+		<columns names="name" ref-type="src-columns"/>
+		<comment><![CDATA[终端型号唯一约束]]></comment>
 	</constraint>
 </table>
 
@@ -1887,7 +1909,7 @@ insert into sys_user_role values ('2', '2292295943954895981');]]></appended-sql>
 	<schema name="public"/>
 	<role name="gb17691"/>
 	<comment><![CDATA[注册信息表]]></comment>
-	<position x="2140" y="1760"/>
+	<position x="2220" y="1880"/>
 	<column name="sim" not-null="true">
 		<type name="text" length="0"/>
 	</column>
