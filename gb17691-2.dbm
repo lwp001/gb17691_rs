@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.3-beta" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="4"
+	 default-schema="public" default-owner="postgres">
+<role name="gb17691"
+      createrole="true"
+      login="true"
+      password="gb17691">
+</role>
+
+<role name="gb17691_cp"
+      createrole="true"
+      login="true"
+      password="gb17691">
+</role>
+
+<role name="gb17691_cp1"
+      createrole="true"
+      login="true"
+      password="gb17691">
+</role>
+
+<database name="gb17691-real" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layer="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="engine" layer="0" collapse-mode="2" max-obj-count="30" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="280" y="60"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="sno" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+		<comment><![CDATA[流水号]]></comment>
+	</column>
+	<column name="speed" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[速度]]></comment>
+	</column>
+	<column name="atmospheric_pressure" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[大气压力]]></comment>
+	</column>
+	<column name="real_torque" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[实际扭矩]]></comment>
+	</column>
+	<column name="friction_torque" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[摩擦扭矩]]></comment>
+	</column>
+	<column name="rotate" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[发动机转速]]></comment>
+	</column>
+	<column name="fuel_flow" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[燃料流量]]></comment>
+	</column>
+	<column name="scr_up_nox" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[三元催化器NOX上游浓度]]></comment>
+	</column>
+	<column name="scr_down_nox" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[三元催化器NOX下游浓度]]></comment>
+	</column>
+	<column name="reagent_tail" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[尿素液位]]></comment>
+	</column>
+	<column name="air_inflow" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[进气量 kg/h]]></comment>
+	</column>
+	<column name="scr_entrance_temperature" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[scr进口温度]]></comment>
+	</column>
+	<column name="scr_export_temperature" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[scr出口温度]]></comment>
+	</column>
+	<column name="dpf_diference_pressure" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[dpf 压差]]></comment>
+	</column>
+	<column name="coolant_temperature" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[冷却液温度(水温)]]></comment>
+	</column>
+	<column name="oil_level" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[油箱液位]]></comment>
+	</column>
+	<column name="gps_status" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[定位状态]]></comment>
+	</column>
+	<column name="longitude" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[经度]]></comment>
+	</column>
+	<column name="latitude" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[纬度]]></comment>
+	</column>
+	<column name="mileage" not-null="true">
+		<type name="real" length="0"/>
+		<comment><![CDATA[里程]]></comment>
+	</column>
+	<column name="ext_data">
+		<type name="jsonb" length="0"/>
+		<comment><![CDATA[{id:1,p1:d1...}]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="engine_pk" type="pk-constr" table="public.engine">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="obd" layer="0" collapse-mode="2" max-obj-count="18" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="720" y="60"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="sno" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="protocal" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="mil_lamp" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="diagnose_support" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="diagnose_status" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="obd_vin">
+		<type name="text" length="0"/>
+	</column>
+	<column name="software_id">
+		<type name="text" length="0"/>
+	</column>
+	<column name="calibration_code">
+		<type name="text" length="0"/>
+	</column>
+	<column name="iupr">
+		<type name="text" length="0"/>
+	</column>
+	<column name="fault_count" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="faults">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="obd_pk" type="pk-constr" table="public.obd">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="encryption_chip_record" layer="0" collapse-mode="2" max-obj-count="10" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[加密芯片备案表]]></comment>
+	<position x="1100" y="60"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="frame_vin" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[报文(帧)头部VIN]]></comment>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[采集时间]]></comment>
+	</column>
+	<column name="chip_id" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[芯片ID]]></comment>
+	</column>
+	<column name="pub_key" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[公钥]]></comment>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[数据体VIN]]></comment>
+	</column>
+	<column name="signature_r" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[签名信息R]]></comment>
+	</column>
+	<column name="signature_s" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[签名S]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[数据入库时间]]></comment>
+	</column>
+	<constraint name="encryption_chip_record_pk" type="pk-constr" table="public.encryption_chip_record">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+</dbmodel>
