@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.3" use-changelog="false" last-position="318,958" last-zoom="1.25" max-obj-count="37"
+<dbmodel pgmodeler-ver="0.9.3" use-changelog="false" last-position="139,810" last-zoom="1.25" max-obj-count="37"
 	 default-schema="public" default-owner="gb17691">
 <role name="gb17691"
       createrole="true"
@@ -1995,7 +1995,7 @@ insert into sys_user_role values ('2', '2292295943954895981');]]></appended-sql>
 	<column name="driver_name">
 		<type name="text" length="0"/>
 	</column>
-	<column name="driver_ca">
+	<column name="driver_qc">
 		<type name="text" length="0"/>
 		<comment><![CDATA[资格证号]]></comment>
 	</column>
