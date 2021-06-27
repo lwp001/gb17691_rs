@@ -1,0 +1,2213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.4-alpha" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="37"
+	 default-owner="postgres">
+<role name="gb17691"
+      createrole="true"
+      login="true"
+      password="gb17691">
+</role>
+
+<role name="gb17691_cp"
+      createrole="true"
+      login="true"
+      password="gb17691">
+</role>
+
+<database name="gb17691" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="login_logout_records" layers="0" collapse-mode="2" max-obj-count="10" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="60" y="800"/>
+	<column name="id" not-null="true">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="login_time" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="login_serial" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="iccid">
+		<type name="text" length="0"/>
+	</column>
+	<column name="logout_time">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="logout_serial">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="updated">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="login_logout_records_pk" type="pk-constr" table="public.login_logout_records">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="vehicle" layers="0" collapse-mode="2" max-obj-count="30" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[添加修改删除车辆时 需要将该操作进行发布]]></comment>
+	<position x="1860" y="40"/>
+	<column name="id" not-null="true" default-value="next_id()">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="lpn" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[license plate number 车牌号]]></comment>
+	</column>
+	<column name="lpn_color" not-null="true" default-value="2">
+		<type name="int2" length="0"/>
+		<comment><![CDATA[license plate color
+2 yellow]]></comment>
+	</column>
+	<column name="org_id" not-null="true">
+		<type name="int8" length="0"/>
+		<comment><![CDATA[organization id]]></comment>
+	</column>
+	<column name="model_id">
+		<type name="bigint" length="0"/>
+		<comment><![CDATA[车型 vehicle models id]]></comment>
+	</column>
+	<column name="division_code" not-null="true">
+		<type name="integer" length="0"/>
+		<comment><![CDATA[行政区划代码]]></comment>
+	</column>
+	<column name="division_name">
+		<type name="text" length="0"/>
+		<comment><![CDATA[行政区划名称]]></comment>
+	</column>
+	<column name="vehicle_classify" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[车辆分类]]></comment>
+	</column>
+	<column name="trade_classify" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[行业分类]]></comment>
+	</column>
+	<column name="sim" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="real_sim">
+		<type name="text" length="0"/>
+	</column>
+	<column name="service_start_date" not-null="true" default-value="current_date">
+		<type name="date" length="0"/>
+		<comment><![CDATA[服务开始时间]]></comment>
+	</column>
+	<column name="service_end_date" not-null="true" default-value="current_date + interval '1 Y'">
+		<type name="date" length="0"/>
+		<comment><![CDATA[服务结束时间 =start+1 year]]></comment>
+	</column>
+	<column name="auth_code" not-null="true" default-value="next_id()">
+		<type name="bigint" length="0"/>
+		<comment><![CDATA[鉴权码 编辑车辆信息时如果 vin 或车牌号 更换 需要更换鉴权码]]></comment>
+	</column>
+	<column name="owner">
+		<type name="text" length="0"/>
+	</column>
+	<column name="owner_phone">
+		<type name="text" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="1">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[1 nomal  0 freeze]]></comment>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created_by" not-null="true">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="updated_by">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="updated" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="terminal_id">
+		<type name="text" length="0"/>
+		<comment><![CDATA[终端ID/编号]]></comment>
+	</column>
+	<column name="terminal_model_id">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[终端型号]]></comment>
+	</column>
+	<constraint name="vehicle_pk" type="pk-constr" table="public.vehicle">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="vin_unique" type="uq-constr" table="public.vehicle">
+		<columns names="vin" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="lpn_unique" type="uq-constr" table="public.vehicle">
+		<columns names="lpn" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="vehicle_sim_uq" type="uq-constr" table="public.vehicle">
+		<columns names="sim" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="organize" layers="0" collapse-mode="2" max-obj-count="25" z-value="0">
+	<schema name="public"/>
+	<appended-sql><![CDATA[INSERT INTO organize (id, name, parent_id, parent_ids_path, serial_id) 
+VALUES (E'0', E'根节点', E'0', '/0', DEFAULT);]]></appended-sql>
+	<position x="1300" y="100"/>
+	<column name="id" not-null="true">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="parent_id" not-null="true">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="parent_ids_path" not-null="true" default-value="'/'">
+		<type name="text" length="0"/>
+	</column>
+	<column name="code">
+		<type name="text" length="0"/>
+		<comment><![CDATA[部门代码]]></comment>
+	</column>
+	<column name="vehicle_count" not-null="true" default-value="0">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[可以考虑单独列一个表]]></comment>
+	</column>
+	<column name="childs" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[直系节点数量]]></comment>
+	</column>
+	<column name="org_type" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[组织类型 : 0 车辆所属公司  1  代理  2 车队]]></comment>
+	</column>
+	<column name="linker">
+		<type name="text" length="0"/>
+		<comment><![CDATA[联系人]]></comment>
+	</column>
+	<column name="phone">
+		<type name="text" length="0"/>
+	</column>
+	<column name="logo">
+		<type name="text" length="0"/>
+	</column>
+	<column name="address">
+		<type name="text" length="0"/>
+	</column>
+	<column name="email">
+		<type name="text" length="0"/>
+	</column>
+	<column name="business_certificate">
+		<type name="text" length="0"/>
+		<comment><![CDATA[经营许可证]]></comment>
+	</column>
+	<column name="status" not-null="true" default-value="1">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[ 1 normal  0 freeze]]></comment>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created_by" not-null="true">
+		<type name="int8" length="0"/>
+		<comment><![CDATA[创建者]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="updated_by">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="updated" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="serial_id" not-null="true">
+		<type name="serial" length="0"/>
+		<comment><![CDATA[只是作序列号用]]></comment>
+	</column>
+	<constraint name="sys_organize_pk" type="pk-constr" table="public.organize">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="name_unique" type="uq-constr" table="public.organize">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="sys_user" layers="0" collapse-mode="2" max-obj-count="15" z-value="0">
+	<schema name="public"/>
+	<appended-sql><![CDATA[insert into sys_user(id,account,password,name,org_id,sex,status) values(2,'test','test','test',1,1,1);]]></appended-sql>
+	<position x="580" y="500"/>
+	<column name="id" not-null="true" default-value="next_id()">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="account" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="password" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="org_id" not-null="true">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="sex" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0  man  1 women]]></comment>
+	</column>
+	<column name="phone">
+		<type name="text" length="0"/>
+	</column>
+	<column name="photo">
+		<type name="text" length="0"/>
+	</column>
+	<column name="email">
+		<type name="text" length="0"/>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="1">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 disable 1 enable]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="create_by" not-null="true" default-value="0">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="sys_user_pk" type="pk-constr" table="public.sys_user">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="account_unique" type="uq-constr" table="public.sys_user">
+		<columns names="account" ref-type="src-columns"/>
+	</constraint>
+	<initial-data>
+<![CDATA[id•account•password•name•org_id•created⸣
+0•admin•'$2b$12$kIUzOsVzJG1Mnep8/yOwJ.8D3WxZOI2cRHS6/BZrK5GvsQHTk/OaG'•admin•0•⸣
+2•test•abcdef•test•0•]]>
+	</initial-data>
+</table>
+
+<table name="user_resource" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="880" y="200"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="resource_id" not-null="true">
+		<type name="int8" length="0"/>
+		<comment><![CDATA[资源ID]]></comment>
+	</column>
+	<column name="type">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[1 user~role;2 user~org; 3 role~permission;4 menu~btnfun]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="sys_relation_pk" type="pk-constr" table="public.user_resource">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tbox_info" layers="0" collapse-mode="2" max-obj-count="19" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="80" y="1700"/>
+	<column name="imei" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="t_type">
+		<type name="text" length="0"/>
+	</column>
+	<column name="t_id">
+		<type name="text" length="0"/>
+	</column>
+	<column name="iccid">
+		<type name="text" length="0"/>
+	</column>
+	<column name="apn">
+		<type name="text" length="0"/>
+	</column>
+	<column name="sim">
+		<type name="text" length="0"/>
+	</column>
+	<column name="vin">
+		<type name="text" length="0"/>
+	</column>
+	<column name="gsm_ver">
+		<type name="text" length="0"/>
+	</column>
+	<column name="mcu_ver">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ip1">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ip2">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ip3">
+		<type name="text" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="0">
+		<type name="int4" length="0"/>
+	</column>
+	<column name="upgrade" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 不升级 1 升级]]></comment>
+	</column>
+	<column name="upgrade_time" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="updated" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[数据上报更新时间]]></comment>
+	</column>
+	<constraint name="tbox_info_pk" type="pk-constr" table="public.tbox_info">
+		<columns names="imei" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tbox_record" layers="0" collapse-mode="2" max-obj-count="18" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<appended-sql><![CDATA[CREATE TABLE p_tbox_record _1911 PARTITION OF tbox_record  FOR VALUES FROM ('2019-11-01') TO ('2019-12-01');
+CREATE TABLE p_tbox_record _1912 PARTITION OF tbox_record  FOR VALUES FROM ('2019-12-01') TO ('2020-01-01');
+CREATE TABLE p_tbox_record   PARTITION OF tbox_record   DEFAULT;]]></appended-sql>
+	<position x="520" y="1700"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="imei">
+		<type name="text" length="0"/>
+	</column>
+	<column name="t_type">
+		<type name="text" length="0"/>
+	</column>
+	<column name="t_id">
+		<type name="text" length="0"/>
+	</column>
+	<column name="iccid">
+		<type name="text" length="0"/>
+	</column>
+	<column name="apn">
+		<type name="text" length="0"/>
+	</column>
+	<column name="sim">
+		<type name="text" length="0"/>
+	</column>
+	<column name="vin">
+		<type name="text" length="0"/>
+	</column>
+	<column name="gsm_ver">
+		<type name="text" length="0"/>
+	</column>
+	<column name="mcu_ver">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ip1">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ip2">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ip3">
+		<type name="text" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="0">
+		<type name="int4" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="tbox_record_pk" type="pk-constr" table="public.tbox_record">
+		<columns names="id,created" ref-type="src-columns"/>
+	</constraint>
+	<partitioning type="RANGE">
+		<partitionkey>
+			<column name="created"/>
+		</partitionkey>
+	</partitioning>
+</table>
+
+<table name="tbox_upgraded" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="60" y="2100"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="imei" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="tbox_updated_pk" type="pk-constr" table="public.tbox_upgraded">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<function name="fn_tbbox_insert_record"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		parallel-type="PARALLEL UNSAFE"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[
+begin
+	IF (select  count(*)  from tbox_info  where imei =new.imei) = 0 
+	THEN
+	   INSERT INTO tbox_info   (imei,t_type,t_id,iccid,apn,sim,vin,gsm_ver,mcu_ver,ip1,ip2,ip3,status,upgrade_time) values(new.imei,new.t_type,new.t_id,new.iccid,new.apn,new.sim,new.vin,new.gsm_ver,new.mcu_ver,new.ip1,new.ip2,new.ip3,new.status,now());
+	ELSE
+         update tbox_info  set t_type=new.t_type,t_id=new.t_id,iccid=new.iccid,apn=new.apn,sim=new.sim,vin=new.vin,gsm_ver=new.gsm_ver,mcu_ver=new.mcu_ver,ip1=new.ip1,ip2=new.ip2,ip3=new.ip3,status=new.status ,updated=now() where imei=new.imei;
+	END IF;
+   return null;
+end;
+]]></definition>
+</function>
+
+<trigger name="tr_tbox_record_insert" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="true" del-event="false" upd-event="false" trunc-event="false"
+	 table="public.tbox_record">
+		<function signature="public.fn_tbbox_insert_record()"/>
+</trigger>
+
+<table name="org_tree_path" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="2540" y="80"/>
+	<column name="ancestor" not-null="true">
+		<type name="uuid" length="0"/>
+		<comment><![CDATA[祖先]]></comment>
+	</column>
+	<column name="descendant" not-null="true">
+		<type name="uuid" length="0"/>
+		<comment><![CDATA[后代]]></comment>
+	</column>
+	<column name="path_length" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[与祖先的距离(层次)]]></comment>
+	</column>
+	<constraint name="org_tree_path_pk" type="pk-constr" table="public.org_tree_path">
+		<columns names="ancestor,descendant" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<function name="fn_org_insert"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		parallel-type="PARALLEL UNSAFE"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[begin
+         update organize  set  childs=childs+1 where id=new.parent_id;
+	       return null;
+end;
+]]></definition>
+</function>
+
+<trigger name="tr_org_insert" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="true" del-event="false" upd-event="false" trunc-event="false"
+	 table="public.organize">
+		<function signature="public.fn_org_insert()"/>
+</trigger>
+
+<function name="fn_org_del"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		parallel-type="PARALLEL UNSAFE"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[begin
+         update organize  set  childs=childs-1 where id=old.parent_id;
+	       return null;
+end;
+]]></definition>
+</function>
+
+<trigger name="tr_org_del" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="false" del-event="true" upd-event="false" trunc-event="false"
+	 table="public.organize">
+		<function signature="public.fn_org_del()"/>
+</trigger>
+
+<table name="china_region" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="80" y="1040"/>
+	<column name="code" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="level" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="parent_code" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="center" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="china_region_pk" type="pk-constr" table="public.china_region">
+		<columns names="code" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="sys_dict_data" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="80" y="1380"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="code" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[类型代码]]></comment>
+	</column>
+	<column name="dict_key" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="dict_name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="is_default" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 not 1 yes]]></comment>
+	</column>
+	<column name="status" not-null="true" default-value="1">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 freeze 1 active]]></comment>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="sys_dict_data_pk" type="pk-constr" table="public.sys_dict_data">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<initial-data>
+<![CDATA[code•dict_key•dict_name•is_default⸣
+vehicle_classify•10•客车•0⸣
+vehicle_classify•11•大型客车•0⸣
+vehicle_classify•12•中型客车•0⸣
+vehicle_classify•13•小型客车•0⸣
+vehicle_classify•14•轿车•0⸣
+vehicle_classify•15•大型卧铺客车•0⸣
+vehicle_classify•16•中型卧铺客车•0⸣
+vehicle_classify•20•普通货车•0⸣
+vehicle_classify•21•大型普通货车•1⸣
+vehicle_classify•22•中型普通货车•0⸣
+vehicle_classify•23•小型普通货车•0⸣
+vehicle_classify•30•专用运输车•0⸣
+vehicle_classify•31•集装箱车•0⸣
+vehicle_classify•32•大件运输车•0⸣
+vehicle_classify•33•保温冷藏车•0⸣
+vehicle_classify•34•商品车运输专用车•0⸣
+vehicle_classify•35•罐车•0⸣
+vehicle_classify•36•牵引车•0⸣
+vehicle_classify•37•挂车•0⸣
+vehicle_classify•38•平板车•0⸣
+vehicle_classify•39•其他专用车•0⸣
+vehicle_classify•40•危险品运输车•0⸣
+vehicle_classify•50•农用车•0⸣
+vehicle_classify•60•拖拉机•0⸣
+vehicle_classify•61•轮式拖拉机•0⸣
+vehicle_classify•62•手扶拖拉机•0⸣
+vehicle_classify•63•履带拖拉机•0⸣
+vehicle_classify•64•特种拖拉机•0⸣
+vehicle_classify•90•其他车辆•0⸣
+trade_classify•10•旅客运输•0⸣
+trade_classify•11•班车客运•0⸣
+trade_classify•12•包车客运•0⸣
+trade_classify•13•定线旅游•0⸣
+trade_classify•14•非定线旅游•0⸣
+trade_classify•20•货物运输•0⸣
+trade_classify•21•普通货物运输•1⸣
+trade_classify•22•专用运输•0⸣
+trade_classify•23•大型物件运输•0⸣
+trade_classify•30•危险货物运输•0⸣
+trade_classify•31•营运性危险货物运输•0⸣
+trade_classify•32•非营运性危险货物运输•0⸣
+trade_classify•40•机动车维修•0⸣
+trade_classify•41•汽车维修•0⸣
+trade_classify•42•危险货物运输车辆维修•0⸣
+trade_classify•43•摩托车维修•0⸣
+trade_classify•44•其他机动车维修•0⸣
+trade_classify•50•机动车驾驶员培训•0⸣
+trade_classify•51•普通机动车驾驶员培训•0⸣
+trade_classify•52•运输驾驶员从业资格培训•0⸣
+trade_classify•53•机动车驾驶员培训教练场•0⸣
+trade_classify•60•战场服务•0⸣
+trade_classify•61•旅客运输站•0⸣
+trade_classify•62•货运站•0⸣
+trade_classify•70•国际运输•0⸣
+trade_classify•71•国际旅客运输•0⸣
+trade_classify•72•国际货物运输•0⸣
+trade_classify•80•公交运输•0⸣
+trade_classify•81•公交运输•0⸣
+trade_classify•90•出租运输•0⸣
+trade_classify•91•客运出租运输•0⸣
+trade_classify•92•货运出租运输•0⸣
+trade_classify•100•汽车租赁•0⸣
+trade_classify•101•客运汽车租赁•0⸣
+trade_classify•102•货运汽车租赁•0⸣
+fule_type•1•汽油•0⸣
+fule_type•2•柴油•1⸣
+fule_type•3•天然气•0⸣
+fule_type•4•液化气•0⸣
+fule_type•5•电动•0⸣
+fule_type•9•其他•0⸣
+lpn_color•1•蓝色•0⸣
+lpn_color•2•黄色•1⸣
+lpn_color•3•黑色•0⸣
+lpn_color•4•白色•0⸣
+lpn_color•9•其他•0]]>
+	</initial-data>
+</table>
+
+<table name="sys_dict_type" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<position x="80" y="1180"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="code">
+		<type name="text" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="1">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0  freeze 1 active]]></comment>
+	</column>
+	<constraint name="sys_dict_type_pk" type="pk-constr" table="public.sys_dict_type">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="dict_code_un" type="uq-constr" table="public.sys_dict_type">
+		<columns names="code" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="dict_type_name_uq" type="uq-constr" table="public.sys_dict_type">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+	<initial-data>
+<![CDATA[name•code⸣
+车牌颜色•lpn_color⸣
+车辆类型•vehicle_classify⸣
+运输行业类型•trade_classify⸣
+燃料类型•fule_type]]>
+	</initial-data>
+</table>
+
+<schema name="jt808" layers="0" rect-visible="true" fill-color="#e1e1e1">
+	<role name="gb17691"/>
+</schema>
+
+<table name="gps" layers="0" collapse-mode="2" max-obj-count="48" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<appended-sql><![CDATA[
+CREATE TABLE p_gps_2001 PARTITION OF gps  FOR VALUES FROM ('2020-01-01') TO ('2020-02-01');
+CREATE TABLE p_gps_2002 PARTITION OF gps  FOR VALUES FROM ('2020-02-01') TO ('2020-03-01');
+CREATE TABLE p_gps_2003 PARTITION OF gps  FOR VALUES FROM ('2020-03-01') TO ('2020-04-01');
+CREATE TABLE p_gps   PARTITION OF gps   DEFAULT;]]></appended-sql>
+	<position x="1480" y="800"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="alarm" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="lng" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[longitude]]></comment>
+	</column>
+	<column name="lat" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[latitude]]></comment>
+	</column>
+	<column name="offset_lng" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="offset_lat" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="altitude" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[高度 单位 m]]></comment>
+	</column>
+	<column name="speed" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[gps 速度 km/h]]></comment>
+	</column>
+	<column name="direction" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[正北0 东 90 南180 西270 ]]></comment>
+	</column>
+	<column name="mileage">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="oil_mass">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="r_speed">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[记录仪速度]]></comment>
+	</column>
+	<column name="firm_alarm_id">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="tire_pressure">
+		<type name="text" length="0"/>
+		<comment><![CDATA[胎压]]></comment>
+	</column>
+	<column name="carriage_temperature">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[车厢温度]]></comment>
+	</column>
+	<column name="ext_signal">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[扩展信号]]></comment>
+	</column>
+	<column name="io_status">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="ad0">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="ad1">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="rssi">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[无线通信信号强度]]></comment>
+	</column>
+	<column name="gnss">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[卫星颗数]]></comment>
+	</column>
+	<column name="ext_data">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ver" not-null="true" default-value="2013">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[版本]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="video_alarm">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[视频报警信息 0x14]]></comment>
+	</column>
+	<column name="video_signal_miss_alarm">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[视频信号丢失报警0x15]]></comment>
+	</column>
+	<column name="video_block_alarm">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[视频遮挡报警0x16]]></comment>
+	</column>
+	<column name="store_fault">
+		<type name="int2" length="0"/>
+		<comment><![CDATA[存储器故障报警0x17]]></comment>
+	</column>
+	<column name="drive_alarm">
+		<type name="int2" length="0"/>
+		<comment><![CDATA[驾驶异常报警0x18]]></comment>
+	</column>
+	<column name="overspeed_flag">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[扩展数据 超速标志 0 无特定区域 1 圆形 2矩形 3 多边形 4 路线]]></comment>
+	</column>
+	<column name="overspeed_fence_id">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[超速的围栏ID]]></comment>
+	</column>
+	<column name="fence_alarm_flag">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[围栏类型 同超速类型]]></comment>
+	</column>
+	<column name="fence_alarm_id">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[围栏ID]]></comment>
+	</column>
+	<column name="fence_alarm_direct">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[进出围栏  0进 1 出]]></comment>
+	</column>
+	<column name="line_id">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[路线ID]]></comment>
+	</column>
+	<column name="line_duration">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[路线里 两个点之间的路段行驶时长]]></comment>
+	</column>
+	<column name="line_time_alarm">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[路段行驶时间报警: 0 不足;1 过长 ]]></comment>
+	</column>
+	<constraint name="gps_pk" type="pk-constr" table="jt808.gps">
+		<columns names="id,utc" ref-type="src-columns"/>
+	</constraint>
+	<partitioning type="RANGE">
+		<partitionkey>
+			<column name="utc"/>
+		</partitionkey>
+	</partitioning>
+</table>
+
+<table name="ic_record" layers="0" collapse-mode="2" max-obj-count="13" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[司机卡插拔记录表 最好可以按月分区]]></comment>
+	<position x="1480" y="1660"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="in_or_out" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[1: 插卡; 2: 拔卡;]]></comment>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="result" default-value="0">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="driver_name">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ic_qc">
+		<type name="text" length="0"/>
+		<comment><![CDATA[qualification certificate 从业资格证]]></comment>
+	</column>
+	<column name="ic_ca">
+		<type name="text" length="0"/>
+		<comment><![CDATA[发证机构名称]]></comment>
+	</column>
+	<column name="expiry_date">
+		<type name="text" length="0"/>
+		<comment><![CDATA[有效期]]></comment>
+	</column>
+	<column name="driver_id">
+		<type name="text" length="0"/>
+		<comment><![CDATA[驾驶员身份证号]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[服务器接受时间]]></comment>
+	</column>
+	<constraint name="ic_record_pk" type="pk-constr" table="jt808.ic_record">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="media_event" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<position x="2740" y="1060"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="media_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="media_type" not-null="true" default-value="9">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 图像 1 音频 2 视频]]></comment>
+	</column>
+	<column name="encoding" not-null="true" default-value="9">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[编码格式 0 jpeg 1 tif 2 mp3 3 wav 4 wmv]]></comment>
+	</column>
+	<column name="event_type" not-null="true" default-value="9">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="channel" not-null="true" default-value="99">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="media_event_pk" type="pk-constr" table="jt808.media_event">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="media_file" layers="0" collapse-mode="2" max-obj-count="22" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<position x="1940" y="1080"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="lpn" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="media_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="file_type" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0: 图像; 1: 音频; 2: 视频]]></comment>
+	</column>
+	<column name="encoding" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[编码格式 0:jpeg,1:tif,2:mp3,3:wav,4:wmv]]></comment>
+	</column>
+	<column name="event_type" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[事件编码项 0：平台下发指令；1：定时动作；2：抢劫报警触发；3：碰撞侧翻报警触发；4：门开拍照；5：门关拍照；6：车门由开变关，时速从＜20 公里到超过 20 公里；7：定距拍照； ]]></comment>
+	</column>
+	<column name="channel" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[摄像头通道号]]></comment>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="alarm" not-null="true" default-value="0">
+		<type name="int4" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="0">
+		<type name="int4" length="0"/>
+	</column>
+	<column name="longitude" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="latitude" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="offset_lng" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="offset_lat" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="altitude" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="speed" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="direction" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="path">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="media_file_pk" type="pk-constr" table="jt808.media_file">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<function name="next_id"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		parallel-type="PARALLEL UNSAFE"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql"/>
+	<return-type>
+	<type name="bigint" length="0"/>
+	</return-type>
+	<parameter name="result" out="true">
+		<type name="bigint" length="0"/>
+	</parameter>
+	<definition><![CDATA[DECLARE
+    our_epoch bigint := 1314220021721;
+    seq_id bigint;
+    now_millis bigint;
+    shard_id int := 5;
+BEGIN
+    -- there is a typo here in the online example, which is corrected here
+    SELECT nextval('seq_auth_code') % 1024 INTO seq_id;
+
+    SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis;
+    result := (now_millis - our_epoch) << 23;
+    result := result | (shard_id << 10);
+    result := result | (seq_id);
+END;]]></definition>
+</function>
+
+<sequence name="seq_auth_code" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[验证码序列]]></comment>
+</sequence>
+
+<function name="fn_vehicle_del"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		parallel-type="PARALLEL UNSAFE"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[begin
+         --update organize  set  vehicle_count=vehicle_count+1 where id=new.org_id;
+		update organize set vehicle_count=vehicle_count-1 where id::TEXT in(
+				SELECT regexp_split_to_table(parent_ids_path, '/') FROM organize 
+				WHERE id=old.org_id
+		);
+	    return null;
+end;]]></definition>
+</function>
+
+<function name="fn_vehicle_add"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		parallel-type="PARALLEL UNSAFE"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[begin
+         --update organize  set  vehicle_count=vehicle_count+1 where id=new.org_id;
+		update organize set vehicle_count=vehicle_count+1 where id::TEXT in(
+				SELECT regexp_split_to_table(parent_ids_path, '/') FROM organize 
+				WHERE id=new.org_id
+		);
+	    insert into last_gps (vin) values(new.lpn);
+	    return null;
+end;]]></definition>
+</function>
+
+<trigger name="tr_vehicle_add" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="true" del-event="false" upd-event="false" trunc-event="false"
+	 table="public.vehicle">
+		<function signature="public.fn_vehicle_add()"/>
+</trigger>
+
+<trigger name="tr_vehicle_del" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="false" del-event="true" upd-event="false" trunc-event="false"
+	 table="public.vehicle">
+		<function signature="public.fn_vehicle_del()"/>
+</trigger>
+
+<function name="fn_vehicle_update_orgid"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		parallel-type="PARALLEL UNSAFE"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[begin
+         --update organize  set  vehicle_count=vehicle_count+1 where id=new.org_id;
+	   if old.org_id != new.org_id then
+			-- 调入组+1
+			update organize set vehicle_count=vehicle_count+1 where id::TEXT in(
+					SELECT regexp_split_to_table(parent_ids_path, '/') FROM organize 
+					WHERE id=new.org_id
+			);
+			-- 调出组-1
+			update organize set vehicle_count=vehicle_count-1 where id::TEXT in(
+					SELECT regexp_split_to_table(parent_ids_path, '/') FROM organize 
+					WHERE id=old.org_id
+			);
+		end if;
+	    return null;
+end;]]></definition>
+</function>
+
+<trigger name="tr_vehicle_update_orgid" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="false" del-event="false" upd-event="true" trunc-event="false"
+	 table="public.vehicle">
+		<function signature="public.fn_vehicle_update_orgid()"/>
+		<columns names="org_id"/>
+</trigger>
+
+<function name="fn_vehicle_update_register_info"
+		window-func="false"
+		returns-setof="false"
+		behavior-type="CALLED ON NULL INPUT"
+		function-type="VOLATILE"
+		security-type="SECURITY INVOKER"
+		parallel-type="PARALLEL UNSAFE"
+		execution-cost="1"
+		row-amount="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<language name="plpgsql"/>
+	<return-type>
+	<type name="trigger" length="0"/>
+	</return-type>
+	<definition><![CDATA[begin	
+	--修改车辆上线信息 需要更新鉴权码 迫使车辆重新注册
+		if old.lpn != new.lpn or old.vin != new.vin or old.sim != new.sim then
+			update vehicle set auth_code=next_id() where id= old.id;
+		end if;
+		return null;
+end;]]></definition>
+</function>
+
+<trigger name="tr_vehicle_update_register_info" firing-type="AFTER" per-line="true" constraint="false"
+	 ins-event="false" del-event="false" upd-event="true" trunc-event="false"
+	 table="public.vehicle">
+		<function signature="public.fn_vehicle_update_register_info()"/>
+		<columns names="lpn,vin,sim"/>
+</trigger>
+
+<table name="sys_role" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[角色信息表]]></comment>
+	<appended-sql><![CDATA[insert into sys_role(id,name,code,data_scope,status,note,create_by) values(2292295943954895980,'管理员',   'admin',  1, '1', '管理员',1);
+insert into sys_role(id,name,code,data_scope,status,note,create_by) values(2292295943954895981,'普通角色', 'common', 2, '1', '普通角色',1);
+]]></appended-sql>
+	<position x="580" y="900"/>
+	<column name="id" not-null="true" default-value="next_id()">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[角色名称]]></comment>
+	</column>
+	<column name="code" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[角色权限字符串 role_key]]></comment>
+	</column>
+	<column name="data_scope" not-null="true" default-value="3">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限]]></comment>
+	</column>
+	<column name="status" not-null="true" default-value="1">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[状态 0 disable 1 enable]]></comment>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<column name="create_by" not-null="true">
+		<type name="bigint" length="0"/>
+		<comment><![CDATA[创建者]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[创建时间]]></comment>
+	</column>
+	<column name="update_by">
+		<type name="bigint" length="0"/>
+		<comment><![CDATA[更新者]]></comment>
+	</column>
+	<column name="updated" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[更新时间]]></comment>
+	</column>
+	<constraint name="sys_role_pk" type="pk-constr" table="public.sys_role">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="uq_role_code" type="uq-constr" table="public.sys_role">
+		<columns names="code" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="sys_menu" layers="0" collapse-mode="2" max-obj-count="19" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[菜单表]]></comment>
+	<appended-sql><![CDATA[insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292261981995930670,'系统管理', 0, '1', 'system',           null,   0, 'M', '1', '', 'system',  '系统管理目录',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292261982029485103,'系统监控', 0, '2', 'monitor',          null,   0, 'M', '1', '', 'monitor', '系统监控目录',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292261982029485104,'系统工具', 0, '3', 'tool',             null,   0, 'M', '1', '', 'tool',    '系统工具目录',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292261982029485105,'若依官网', 0, '4', 'http://ruoyi.vip', null ,  1, 'M', '1', '', 'guide',   '若依官网地址',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556654867506,'用户管理', '2292261981995930670',   '1', 'user',       'system/user/index',        0, 'C', '1', 'system:user:list',        'user',        '用户管理菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256115,'角色管理', '2292261981995930670',   '2', 'role',       'system/role/index',        0, 'C', '1', 'system:role:list',        'peoples',     '角色管理菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256116,'菜单管理', '2292261981995930670',   '3', 'menu',       'system/menu/index',        0, 'C', '1', 'system:menu:list',        'tree-table',  '菜单管理菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256117,'部门管理', '2292261981995930670',   '4', 'dept',       'system/dept/index',        0, 'C', '1', 'system:dept:list',        'tree',        '部门管理菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256118,'岗位管理', '2292261981995930670',   '5', 'post',       'system/post/index',        0, 'C', '1', 'system:post:list',        'post',        '岗位管理菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256119,'字典管理', '2292261981995930670',   '6', 'dict',       'system/dict/index',        0, 'C', '1', 'system:dict:list',        'dict',        '字典管理菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256120,'参数设置', '2292261981995930670',   '7', 'config',     'system/config/index',      0, 'C', '1', 'system:config:list',      'edit',        '参数设置菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256121,'通知公告', '2292261981995930670',   '8', 'notice',     'system/notice/index',      0, 'C', '1', 'system:notice:list',      'message',     '通知公告菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256122,'日志管理', '2292261981995930670',   '9', 'log',        'system/log/index',         0, 'M', '1', '',                        'log',         '日志管理菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256123,'在线用户', '2292261982029485103',   '1', 'online',     'monitor/online/index',     0, 'C', '1', 'monitor:online:list',     'online',      '在线用户菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256124,'定时任务', '2292261982029485103',   '2', 'job',        'monitor/job/index',        0, 'C', '1', 'monitor:job:list',        'job',         '定时任务菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256125,'数据监控', '2292261982029485103',   '3', 'druid',      'monitor/druid/index',      0, 'C', '1', 'monitor:druid:list',      'druid',       '数据监控菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556663256126,'服务监控', '2292261982029485103',   '4', 'server',     'monitor/server/index',     0, 'C', '1', 'monitor:server:list',     'server',      '服务监控菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556671644735,'表单构建', '2292261982029485104',   '1', 'build',      'tool/build/index',         0 ,'C', '1', 'tool:build:list',         'build',       '表单构建菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556671644736,'代码生成', '2292261982029485104',   '2', 'gen',        'tool/gen/index',           0, 'C', '1', 'tool:gen:list',           'code',        '代码生成菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292270556671644737,'系统接口', '2292261982029485104',   '3', 'swagger',    'tool/swagger/index',       0, 'C', '1', 'tool:swagger:list',       'swagger',     '系统接口菜单',1);
+
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292273106053502018,'操作日志', '2292270556663256122', '1', 'operlog',    'monitor/operlog/index',    0, 'C', 1, 'monitor:operlog:list',    'form',      '操作日志菜单',1);
+insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292273106053502019,'登录日志', '2292270556663256122', '2', 'logininfor', 'monitor/logininfor/index', 0, 'C', 1, 'monitor:logininfor:list', 'logininfor','登录日志菜单',1);
+
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('用户查询', '2292270556654867506', '1',  '', '', 0, 'F', '1', 'system:user:query',   '#', '',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('用户新增', '2292270556654867506', '2',  '', '', 0, 'F', '1', 'system:user:add',     '#', '',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('用户修改', '2292270556654867506', '3',  '', '', 0, 'F', '1', 'system:user:edit',    '#', '',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('用户删除', '2292270556654867506', '4',  '', '', 0, 'F', '1', 'system:user:remove',  '#', '',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('用户导出', '2292270556654867506', '5',  '', '', 0, 'F', '1', 'system:user:export',  '#', '',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('用户导入', '2292270556654867506', '6',  '', '', 0, 'F', '1', 'system:user:import',  '#', '',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('重置密码', '2292270556654867506', '7',  '', '', 0, 'F', '1', 'system:user:resetPwd','#', '',1);
+
+
+-- 角色管理按钮
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('角色查询', '2292270556663256115', '1',  '', '', 0, 'F', '1', 'system:role:query', '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('角色新增', '2292270556663256115', '2',  '', '', 0, 'F', '1', 'system:role:add',   '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('角色修改', '2292270556663256115', '3',  '', '', 0, 'F', '1', 'system:role:edit',  '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('角色删除', '2292270556663256115', '4',  '', '', 0, 'F', '1', 'system:role:remove','#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('角色导出', '2292270556663256115', '5',  '', '', 0, 'F', '1', 'system:role:export','#','',1);
+-- 菜单管理按钮                                                                                                                                                                                               
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('菜单查询', '2292270556663256116', '1',  '', '', 0, 'F', '1', 'system:menu:query', '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('菜单新增', '2292270556663256116', '2',  '', '', 0, 'F', '1', 'system:menu:add',   '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('菜单修改', '2292270556663256116', '3',  '', '', 0, 'F', '1', 'system:menu:edit',  '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('菜单删除', '2292270556663256116', '4',  '', '', 0, 'F', '1', 'system:menu:remove','#','',1);
+-- 部门管理按钮                                                                                                                                                                                               
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('部门查询', '2292270556663256117', '1',  '', '', 0, 'F', '1', 'system:dept:query', '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('部门新增', '2292270556663256117', '2',  '', '', 0, 'F', '1', 'system:dept:add',   '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('部门修改', '2292270556663256117', '3',  '', '', 0, 'F', '1', 'system:dept:edit',  '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('部门删除', '2292270556663256117', '4',  '', '', 0, 'F', '1', 'system:dept:remove','#','',1);
+
+-- 字典管理按钮
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('字典查询', '2292270556663256119', '1', '#', '', 0, 'F', '1', 'system:dict:query',          '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('字典新增', '2292270556663256119', '2', '#', '', 0, 'F', '1', 'system:dict:add',            '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('字典修改', '2292270556663256119', '3', '#', '', 0, 'F', '1', 'system:dict:edit',           '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('字典删除', '2292270556663256119', '4', '#', '', 0, 'F', '1', 'system:dict:remove',         '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('字典导出', '2292270556663256119', '5', '#', '', 0, 'F', '1', 'system:dict:export',         '#','',1);
+-- 参数设置按钮                                                                                                                                      
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('参数查询', '2292270556663256120', '1', '#', '', 0, 'F', '1', 'system:config:query',        '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('参数新增', '2292270556663256120', '2', '#', '', 0, 'F', '1', 'system:config:add',          '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('参数修改', '2292270556663256120', '3', '#', '', 0, 'F', '1', 'system:config:edit',         '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('参数删除', '2292270556663256120', '4', '#', '', 0, 'F', '1', 'system:config:remove',       '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('参数导出', '2292270556663256120', '5', '#', '', 0, 'F', '1', 'system:config:export',       '#','',1);
+-- 通知公告按钮                                                                                                                                      
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('公告查询', '2292270556663256121', '1', '#', '', 0, 'F', '1', 'system:notice:query',        '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('公告新增', '2292270556663256121', '2', '#', '', 0, 'F', '1', 'system:notice:add',          '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('公告修改', '2292270556663256121', '3', '#', '', 0, 'F', '1', 'system:notice:edit',         '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('公告删除', '2292270556663256121', '4', '#', '', 0, 'F', '1', 'system:notice:remove',       '#','',1);
+-- 操作日志按钮                                                                                                                                      
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('操作查询', '2292273106053502018', '1', '#', '', 0, 'F', '1', 'monitor:operlog:query',      '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('操作删除', '2292273106053502018', '2', '#', '', 0, 'F', '1', 'monitor:operlog:remove',     '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('日志导出', '2292273106053502018', '4', '#', '', 0, 'F', '1', 'monitor:operlog:export',     '#','',1);
+-- 登录日志按钮                                                                                                                                      
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('登录查询', '2292273106053502019', '1', '#', '', 0, 'F', '1', 'monitor:logininfor:query',   '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('登录删除', '2292273106053502019', '2', '#', '', 0, 'F', '1', 'monitor:logininfor:remove',  '#','',1);
+insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('日志导出', '2292273106053502019', '3', '#', '', 0, 'F', '1', 'monitor:logininfor:export',  '#','',1);
+
+]]></appended-sql>
+	<position x="580" y="1200"/>
+	<column name="id" not-null="true" default-value="next_id()">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="parent_id" not-null="true">
+		<type name="bigint" length="0"/>
+		<comment><![CDATA[父菜单ID]]></comment>
+	</column>
+	<column name="sort" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[排序]]></comment>
+	</column>
+	<column name="path" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[路由地址]]></comment>
+	</column>
+	<column name="component">
+		<type name="text" length="0"/>
+		<comment><![CDATA[组件路径]]></comment>
+	</column>
+	<column name="is_frame" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[是否为外链 0 否 1 是]]></comment>
+	</column>
+	<column name="menu_type" not-null="true" default-value="'M'">
+		<type name="text" length="0"/>
+		<comment><![CDATA[菜单类型: M目录 C菜单 F按钮]]></comment>
+	</column>
+	<column name="visible" not-null="true" default-value="1">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[菜单是否可见: 1显示 0 隐藏]]></comment>
+	</column>
+	<column name="perms">
+		<type name="text" length="0"/>
+		<comment><![CDATA[权限标识]]></comment>
+	</column>
+	<column name="icon" not-null="true" default-value="'#'">
+		<type name="text" length="0"/>
+		<comment><![CDATA[图标]]></comment>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<column name="create_by" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="update_by">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="updated" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="sys_menu_pk" type="pk-constr" table="public.sys_menu">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="sys_user_role" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[用户和角色关联表  用户N-1角色]]></comment>
+	<appended-sql><![CDATA[insert into sys_user_role values ('0', '2292295943954895980');
+insert into sys_user_role values ('2', '2292295943954895981');]]></appended-sql>
+	<position x="1040" y="800"/>
+	<column name="user_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="role_id" not-null="true">
+		<type name="int8" length="0"/>
+	</column>
+	<constraint name="sys_user_role_pk" type="pk-constr" table="public.sys_user_role">
+		<columns names="user_id,role_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="sys_role_menu" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[角色和菜单关联表  角色1-N菜单]]></comment>
+	<position x="1060" y="1080"/>
+	<column name="role_id" not-null="true">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="menu_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="1">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[1 选中的节点  0 未选中但该节点是必经的节点]]></comment>
+	</column>
+	<constraint name="sys_role_menu_pk" type="pk-constr" table="public.sys_role_menu">
+		<columns names="role_id,menu_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="linker" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[联系人]]></comment>
+	<position x="2740" y="780"/>
+	<column name="id" not-null="true" default-value="next_id()">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="phone" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="email">
+		<type name="text" length="0"/>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<column name="org_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="created_by" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="liker_uq" type="uq-constr" table="jt808.linker">
+		<columns names="phone" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="linker_pk" type="pk-constr" table="jt808.linker">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="vehicle_linker" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<position x="2280" y="800"/>
+	<column name="lpn" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="linker_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="prop" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[属性]]></comment>
+	</column>
+	<column name="is_bind" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 未绑定  1  绑定]]></comment>
+	</column>
+	<column name="created_by" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="vehicle_linker_pk" type="pk-constr" table="jt808.vehicle_linker">
+		<columns names="lpn,linker_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="fence" layers="0" collapse-mode="2" max-obj-count="18" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[区域路线表]]></comment>
+	<position x="1900" y="1880"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[名称]]></comment>
+	</column>
+	<column name="fence_type" not-null="true">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[圆:0x8600 矩形:0x8602 多边形:0x8604]]></comment>
+	</column>
+	<column name="prop" not-null="true">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[属性]]></comment>
+	</column>
+	<column name="start_time">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[开始时间]]></comment>
+	</column>
+	<column name="end_time">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[结束时间]]></comment>
+	</column>
+	<column name="max_speed">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="duration">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[超速持续时间]]></comment>
+	</column>
+	<column name="night_max_speed">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[夜间最高速度]]></comment>
+	</column>
+	<column name="path" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[围栏路径 圆: lng,lat;r 矩形/多边形: lng,lat;lng,lat 路线: point_id,line_id,lng,lat,width,line_prop,]]></comment>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<column name="org_id" not-null="true">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="create_by">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="public" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[是否公用 0 否 1是]]></comment>
+	</column>
+	<constraint name="fence_pk" type="pk-constr" table="jt808.fence">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="vehicle_fence" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[车辆围栏表]]></comment>
+	<position x="1920" y="1560"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="lpn" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="fence_id" not-null="true">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[围栏ID]]></comment>
+	</column>
+	<column name="status" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 未绑定  1绑定]]></comment>
+	</column>
+	<column name="create_by" not-null="true" default-value="0">
+		<type name="int8" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="vehicle_fence_pk" type="pk-constr" table="jt808.vehicle_fence">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="vehicle_fence_uq" type="uq-constr" table="jt808.vehicle_fence">
+		<columns names="lpn,fence_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="terminal_supplier" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[终端供应商信息]]></comment>
+	<position x="980" y="1620"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="code" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="address">
+		<type name="text" length="0"/>
+		<comment><![CDATA[地址]]></comment>
+	</column>
+	<column name="linker">
+		<type name="text" length="0"/>
+		<comment><![CDATA[联系人]]></comment>
+	</column>
+	<column name="phone">
+		<type name="text" length="0"/>
+	</column>
+	<column name="email">
+		<type name="text" length="0"/>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+		<comment><![CDATA[备注]]></comment>
+	</column>
+	<constraint name="terminal_supplier_pk" type="pk-constr" table="public.terminal_supplier">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="unq_supplier_code" type="uq-constr" table="public.terminal_supplier">
+		<columns names="code" ref-type="src-columns"/>
+		<comment><![CDATA[供应商代码唯一约束]]></comment>
+	</constraint>
+	<constraint name="unq_supplier_nam" type="uq-constr" table="public.terminal_supplier">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="terminal_model" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[终端型号]]></comment>
+	<position x="980" y="2020"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="supplier_id" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[供应商ID]]></comment>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="terminal_model_pk" type="pk-constr" table="public.terminal_model">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="unq_model_name" type="uq-constr" table="public.terminal_model">
+		<columns names="name" ref-type="src-columns"/>
+		<comment><![CDATA[终端型号唯一约束]]></comment>
+	</constraint>
+</table>
+
+<table name="jt808_register" layers="0" collapse-mode="2" max-obj-count="10" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[注册信息表]]></comment>
+	<position x="1480" y="1980"/>
+	<column name="sim" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="vin">
+		<type name="text" length="0"/>
+		<comment><![CDATA[车辆标识]]></comment>
+	</column>
+	<column name="province">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[省域]]></comment>
+	</column>
+	<column name="city">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[市域]]></comment>
+	</column>
+	<column name="producer">
+		<type name="text" length="0"/>
+		<comment><![CDATA[制造商]]></comment>
+	</column>
+	<column name="terminal_model">
+		<type name="text" length="0"/>
+		<comment><![CDATA[终端型号]]></comment>
+	</column>
+	<column name="terminal_id">
+		<type name="text" length="0"/>
+		<comment><![CDATA[终端ID/编号]]></comment>
+	</column>
+	<column name="color">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="updated" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="jt808_register_pk" type="pk-constr" table="jt808.jt808_register">
+		<columns names="sim" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="customer_expect" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[客户留言表]]></comment>
+	<position x="160" y="260"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="content" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[内容]]></comment>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="is_handle" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[是否处理 0未处理;1处理]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="handled" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[处理时间]]></comment>
+	</column>
+	<constraint name="customer_expect_pk" type="pk-constr" table="public.customer_expect">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="last_gps" layers="0" collapse-mode="2" max-obj-count="46" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<position x="2300" y="1120"/>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="utc">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="alarm" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="status" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="lng" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[longitude]]></comment>
+	</column>
+	<column name="lat" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[latitude]]></comment>
+	</column>
+	<column name="offset_lng" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="offset_lat" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="altitude" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[高度 单位 m]]></comment>
+	</column>
+	<column name="speed" not-null="true" default-value="0">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[gps 速度 km/h]]></comment>
+	</column>
+	<column name="direction" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[正北0 东 90 南180 西270 ]]></comment>
+	</column>
+	<column name="mileage">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="oil_mass">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="r_speed">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[记录仪速度]]></comment>
+	</column>
+	<column name="firm_alarm_id">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="tire_pressure">
+		<type name="text" length="0"/>
+		<comment><![CDATA[胎压]]></comment>
+	</column>
+	<column name="carriage_temperature">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[车厢温度]]></comment>
+	</column>
+	<column name="ext_signal">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[扩展信号]]></comment>
+	</column>
+	<column name="io_status">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="ad0">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="ad1">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="rssi">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[无线通信信号强度]]></comment>
+	</column>
+	<column name="gnss">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[卫星颗数]]></comment>
+	</column>
+	<column name="ext_data">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ver" not-null="true" default-value="2013">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[版本]]></comment>
+	</column>
+	<column name="video_alarm">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[视频报警信息 0x14]]></comment>
+	</column>
+	<column name="video_signal_miss_alarm">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[视频信号丢失报警0x15]]></comment>
+	</column>
+	<column name="video_block_alarm">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[视频遮挡报警0x16]]></comment>
+	</column>
+	<column name="store_fault">
+		<type name="int2" length="0"/>
+		<comment><![CDATA[存储器故障报警0x17]]></comment>
+	</column>
+	<column name="drive_alarm">
+		<type name="int2" length="0"/>
+		<comment><![CDATA[驾驶异常报警0x18]]></comment>
+	</column>
+	<column name="overspeed_flag">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[扩展数据 超速标志 0 无特定区域 1 圆形 2矩形 3 多边形 4 路线]]></comment>
+	</column>
+	<column name="overspeed_fence_id">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[超速的围栏ID]]></comment>
+	</column>
+	<column name="fence_alarm_flag">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[围栏类型 同超速类型]]></comment>
+	</column>
+	<column name="fence_alarm_id">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[围栏ID]]></comment>
+	</column>
+	<column name="fence_alarm_direct">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[进出围栏  0进 1 出]]></comment>
+	</column>
+	<column name="line_id">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[路线ID]]></comment>
+	</column>
+	<column name="line_duration">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[路线里 两个点之间的路段行驶时长]]></comment>
+	</column>
+	<column name="line_time_alarm">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[路段行驶时间报警: 0 不足;1 过长 ]]></comment>
+	</column>
+	<column name="updated">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[数据接收时间]]></comment>
+	</column>
+	<constraint name="last_gps_pk" type="pk-constr" table="jt808.last_gps">
+		<columns names="vin" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="alarm_record" layers="0" collapse-mode="2" max-obj-count="20" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[报警记录表;是否考虑记录时间是设备时间 还是系统时间]]></comment>
+	<position x="2740" y="1380"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="alarm_type" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[报警类型 以808报警位为索引 视频报警 +32]]></comment>
+	</column>
+	<column name="stime" not-null="true">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[start time 开始时间]]></comment>
+	</column>
+	<column name="slng" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[开始经度]]></comment>
+	</column>
+	<column name="slat" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[开始纬度]]></comment>
+	</column>
+	<column name="sspeed" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[开始速度]]></comment>
+	</column>
+	<column name="etime" not-null="true">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[end time 结束时间]]></comment>
+	</column>
+	<column name="elng" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[结束经度]]></comment>
+	</column>
+	<column name="elat" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[结束维度]]></comment>
+	</column>
+	<column name="espeed" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[结束速度]]></comment>
+	</column>
+	<column name="rule_type" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[0 状态变更结束报警  1 超时结束报警]]></comment>
+	</column>
+	<column name="driver_name">
+		<type name="text" length="0"/>
+	</column>
+	<column name="driver_qc">
+		<type name="text" length="0"/>
+		<comment><![CDATA[资格证号]]></comment>
+	</column>
+	<column name="driver_id">
+		<type name="text" length="0"/>
+		<comment><![CDATA[司机身份证]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[创建时间]]></comment>
+	</column>
+	<column name="duration" not-null="true">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[时长秒s]]></comment>
+	</column>
+	<constraint name="alarm_record_pk" type="pk-constr" table="jt808.alarm_record">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="text_msg" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="jt808"/>
+	<role name="gb17691"/>
+	<comment><![CDATA[文本信息记录]]></comment>
+	<position x="2760" y="1820"/>
+	<column name="id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="flag" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[信息标志]]></comment>
+	</column>
+	<column name="content" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[内容]]></comment>
+	</column>
+	<column name="status" not-null="true" default-value="0">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[设备接受状态0 平台已发送设备未回应;1设备返回通用应答]]></comment>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+</table>
+
+<constraint name="org_fk" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.organize" table="public.vehicle">
+	<columns names="org_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="uer_org_fk" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.organize" table="public.sys_user">
+	<columns names="org_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_owner" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_user" table="public.user_resource">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_resource_org" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.organize" table="public.user_resource">
+	<columns names="resource_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_dict_type" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_dict_type" table="public.sys_dict_data">
+	<columns names="code" ref-type="src-columns"/>
+	<columns names="code" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_mf_lpn" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.vehicle" table="jt808.media_file">
+	<columns names="lpn" ref-type="src-columns"/>
+	<columns names="lpn" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_user_role" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_user" table="public.sys_user_role">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_user_role_id" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_role" table="public.sys_user_role">
+	<columns names="role_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_menu_role" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_menu" table="public.sys_role_menu">
+	<columns names="menu_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_menu_role_id" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_role" table="public.sys_role_menu">
+	<columns names="role_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_vl_vid" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.vehicle" table="jt808.vehicle_linker">
+	<columns names="lpn" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_vl_lid" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="jt808.linker" table="jt808.vehicle_linker">
+	<columns names="linker_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="vf_fk_fid" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="jt808.fence" table="jt808.vehicle_fence">
+	<columns names="fence_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+		<comment><![CDATA[vehicle-fence-fk-fence-id]]></comment>
+</constraint>
+
+<constraint name="fk_supplier_id" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.terminal_supplier" table="public.terminal_model">
+	<columns names="supplier_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_vehicle_organize" type="relfk" layers="0"
+	 src-table="public.vehicle"
+	 dst-table="public.organize" reference-fk="org_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_sys_user_organize" type="relfk" layers="0"
+	 src-table="public.sys_user"
+	 dst-table="public.organize" reference-fk="uer_org_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_user_resource_sys_user" type="relfk" layers="0"
+	 src-table="public.user_resource"
+	 dst-table="public.sys_user" reference-fk="fk_owner"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_user_resource_organize" type="relfk" layers="0"
+	 src-table="public.user_resource"
+	 dst-table="public.organize" reference-fk="fk_resource_org"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_sys_dict_data_sys_dict_type" type="relfk" layers="0"
+	 src-table="public.sys_dict_data"
+	 dst-table="public.sys_dict_type" reference-fk="fk_dict_type"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_media_file_vehicle" type="relfk" layers="0"
+	 src-table="jt808.media_file"
+	 dst-table="public.vehicle" reference-fk="fk_mf_lpn"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_sys_user_role_sys_user" type="relfk" layers="0"
+	 src-table="public.sys_user_role"
+	 dst-table="public.sys_user" reference-fk="fk_user_role"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_sys_user_role_sys_role" type="relfk" layers="0"
+	 src-table="public.sys_user_role"
+	 dst-table="public.sys_role" reference-fk="fk_user_role_id"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_sys_role_menu_sys_menu" type="relfk" layers="0"
+	 src-table="public.sys_role_menu"
+	 dst-table="public.sys_menu" reference-fk="fk_menu_role"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_sys_role_menu_sys_role" type="relfk" layers="0"
+	 src-table="public.sys_role_menu"
+	 dst-table="public.sys_role" reference-fk="fk_menu_role_id"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_vehicle_linker_vehicle" type="relfk" layers="0"
+	 src-table="jt808.vehicle_linker"
+	 dst-table="public.vehicle" reference-fk="fk_vl_vid"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_vehicle_linker_linker" type="relfk" layers="0"
+	 src-table="jt808.vehicle_linker"
+	 dst-table="jt808.linker" reference-fk="fk_vl_lid"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_vehicle_fence_fence" type="relfk" layers="0"
+	 src-table="jt808.vehicle_fence"
+	 dst-table="jt808.fence" reference-fk="vf_fk_fid"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_terminal_model_terminal_supplier" type="relfk" layers="0"
+	 src-table="public.terminal_model"
+	 dst-table="public.terminal_supplier" reference-fk="fk_supplier_id"
+	 src-required="false" dst-required="true"/>
+
+</dbmodel>
