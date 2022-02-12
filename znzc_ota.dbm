@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.3" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="4"
+	 default-schema="public" default-owner="postgres">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layer="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="upgrade_cfg" layer="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[升级配置信息]]></comment>
+	<position x="940" y="640"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="from_ver" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[要升级的版本即这个版本需要升级]]></comment>
+	</column>
+	<column name="to_ver" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[升级到的版本号]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[创建时间]]></comment>
+	</column>
+	<column name="created_by" not-null="true" default-value="0">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[创建者]]></comment>
+	</column>
+</table>
+
+<table name="upgrade_record" layer="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[升级记录]]></comment>
+	<position x="940" y="900"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="tid" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[终端号]]></comment>
+	</column>
+	<column name="file_id" not-null="true">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[文件ID]]></comment>
+	</column>
+	<column name="文件名称" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+</table>
+
+<table name="file_info" layer="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1320" y="620"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="size" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="md5" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="file_path" not-null="true">
+		<type name="text" length="0"/>
+		<comment><![CDATA[文件存放路径]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+	</column>
+</table>
+
+</dbmodel>

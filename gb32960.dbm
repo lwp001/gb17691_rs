@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.4" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="4"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="gb32960" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="gb32960" layers="0" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+	<comment><![CDATA[gb32960]]></comment>
+</schema>
+
+<table name="gb32960_data" layers="0" collapse-mode="2" max-obj-count="75" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="240" y="380"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="location_state" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[定位状态]]></comment>
+	</column>
+	<column name="longitude" not-null="true">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="latitude" not-null="true">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="car_state" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[车辆状态 1: 启动; 2: 熄火; 3:其他;]]></comment>
+	</column>
+	<column name="charging_state" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[充电状态  1: 停车充电; 2: 行驶充电; 3: 未充电;4: 充电完成;]]></comment>
+	</column>
+	<column name="drive_model" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[运行模式  1: 纯电; 2: 混动; 3:燃油;]]></comment>
+	</column>
+	<column name="speed" not-null="true">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="mileage" not-null="true">
+		<type name="float8" length="0"/>
+	</column>
+	<column name="total_voltage" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[总电压]]></comment>
+	</column>
+	<column name="total_current" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[总电流]]></comment>
+	</column>
+	<column name="soc" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[电量 %]]></comment>
+	</column>
+	<column name="dcdc" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[1 工作,2 断开]]></comment>
+	</column>
+	<column name="gears" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[挡位]]></comment>
+	</column>
+	<column name="resistance" not-null="true">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[绝缘电阻]]></comment>
+	</column>
+	<column name="accelerate" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[油门踏板行程]]></comment>
+	</column>
+	<column name="brake" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[制动]]></comment>
+	</column>
+	<column name="motor_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[驱动电机数量]]></comment>
+	</column>
+	<column name="motors">
+		<type name="text" length="0"/>
+		<comment><![CDATA[驱动电机]]></comment>
+	</column>
+	<column name="fuel_voltage">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[燃料电池电压]]></comment>
+	</column>
+	<column name="fuel_current">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[燃料电池电流]]></comment>
+	</column>
+	<column name="fuel_rate">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[燃料消耗率]]></comment>
+	</column>
+	<column name="fuel_probe_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[燃料电池温度探针总数]]></comment>
+	</column>
+	<column name="fuel_pts">
+		<type name="text" length="0"/>
+		<comment><![CDATA[探针温度列表]]></comment>
+	</column>
+	<column name="fuel_maxt">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[氢系统中最高温度]]></comment>
+	</column>
+	<column name="fuel_maxtp">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[氢系统中最高温度探针序号]]></comment>
+	</column>
+	<column name="fuel_h2max_con">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[氢气最高浓度]]></comment>
+	</column>
+	<column name="fuel_h2max_cp">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[氢气最高浓度传感器序号]]></comment>
+	</column>
+	<column name="fuel_h2max_pre">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[最高压力]]></comment>
+	</column>
+	<column name="fuel_h2max_pp">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高压力传感器代号]]></comment>
+	</column>
+	<column name="fuel_dcdc">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[高压DCDC 1 工作,2 断开]]></comment>
+	</column>
+	<column name="engine_state">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[发动机状态 1 启动,2 关闭,]]></comment>
+	</column>
+	<column name="engine_rotate">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[曲轴转速]]></comment>
+	</column>
+	<column name="engine_fuelrate">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[燃料消耗率]]></comment>
+	</column>
+	<column name="emax_vsn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高电压电池子系统号]]></comment>
+	</column>
+	<column name="emax_vn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高电压电池单体代号]]></comment>
+	</column>
+	<column name="emax_voltage" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[电池单体电压最高值]]></comment>
+	</column>
+	<column name="emin_vsn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最低电压电池子系统号]]></comment>
+	</column>
+	<column name="emin_vn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最低电压电池单体代号]]></comment>
+	</column>
+	<column name="emin_voltage" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[电池单体电压最低值]]></comment>
+	</column>
+	<column name="emax_tsn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高温度子系统号]]></comment>
+	</column>
+	<column name="emax_tpn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高温度探针序号]]></comment>
+	</column>
+	<column name="emax_temp" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高温度]]></comment>
+	</column>
+	<column name="emin_tsn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最低温度子系统号]]></comment>
+	</column>
+	<column name="emin_tpn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最低温度探针序号]]></comment>
+	</column>
+	<column name="emin_temp" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最低温度]]></comment>
+	</column>
+	<column name="alarm_level">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[报警等级 0 无故障,1 1级故障,2 2级故障,3 3级故障]]></comment>
+	</column>
+	<column name="alarm_flag">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[报警标志]]></comment>
+	</column>
+	<column name="fault_storage_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[充电储能故障总数]]></comment>
+	</column>
+	<column name="fault_storage">
+		<type name="text" length="0"/>
+		<comment><![CDATA[充电储能故障代码列表]]></comment>
+	</column>
+	<column name="fault_motor_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[驱动电机故障数]]></comment>
+	</column>
+	<column name="fault_motor">
+		<type name="text" length="0"/>
+		<comment><![CDATA[驱动电机故障代码列表]]></comment>
+	</column>
+	<column name="fault_engine_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[发动机故障数]]></comment>
+	</column>
+	<column name="fault_engine">
+		<type name="text" length="0"/>
+		<comment><![CDATA[发动机故障代码列表]]></comment>
+	</column>
+	<column name="fault_other_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[其他故障数]]></comment>
+	</column>
+	<column name="fault_other">
+		<type name="text" length="0"/>
+		<comment><![CDATA[其他故障列表]]></comment>
+	</column>
+	<column name="subsystem8_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[可充电储能装置电压子系统个数]]></comment>
+	</column>
+	<column name="storage_voltages">
+		<type name="text" length="0"/>
+		<comment><![CDATA[电压数据详情]]></comment>
+	</column>
+	<column name="subsystem9_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[可充电储能装置温度子系统个数]]></comment>
+	</column>
+	<column name="storage_temps">
+		<type name="text" length="0"/>
+		<comment><![CDATA[温度数据详情]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[记录创建时间]]></comment>
+	</column>
+	<constraint name="gb32960_data_pk" type="pk-constr" table="public.gb32960_data">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="online_record" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[在线记录]]></comment>
+	<position x="240" y="60"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="iccid">
+		<type name="text" length="0"/>
+	</column>
+	<column name="login_serial" not-null="true">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[登录流水号]]></comment>
+	</column>
+	<column name="subsystem_count" not-null="true">
+		<type name="int2" length="0"/>
+		<comment><![CDATA[子系统数]]></comment>
+	</column>
+	<column name="subsystem_code">
+		<type name="text" length="0"/>
+		<comment><![CDATA[子系统代码]]></comment>
+	</column>
+	<column name="online_time" not-null="true">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[上线时间]]></comment>
+	</column>
+	<column name="offline_time">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[下线时间]]></comment>
+	</column>
+	<column name="logout_serial">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[离线流水号]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[记录写入时间]]></comment>
+	</column>
+	<constraint name="online_record_pk" type="pk-constr" table="public.online_record">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="gb32960_last_data" layers="0" collapse-mode="2" max-obj-count="74" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[最后一条数据信息]]></comment>
+	<position x="720" y="380"/>
+	<column name="vin" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="utc" not-null="true">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="location_state" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[定位状态]]></comment>
+	</column>
+	<column name="longitude" not-null="true">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="latitude" not-null="true">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="car_state" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[车辆状态 1: 启动; 2: 熄火; 3:其他;]]></comment>
+	</column>
+	<column name="charging_state" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[充电状态  1: 停车充电; 2: 行驶充电; 3: 未充电;4: 充电完成;]]></comment>
+	</column>
+	<column name="drive_model" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[运行模式  1: 纯电; 2: 混动; 3:燃油;]]></comment>
+	</column>
+	<column name="speed" not-null="true">
+		<type name="float4" length="0"/>
+	</column>
+	<column name="mileage" not-null="true">
+		<type name="float8" length="0"/>
+	</column>
+	<column name="total_voltage" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[总电压]]></comment>
+	</column>
+	<column name="total_current" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[总电流]]></comment>
+	</column>
+	<column name="soc" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[电量 %]]></comment>
+	</column>
+	<column name="dcdc" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[1 工作,2 断开]]></comment>
+	</column>
+	<column name="gears" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[挡位]]></comment>
+	</column>
+	<column name="resistance" not-null="true">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[绝缘电阻]]></comment>
+	</column>
+	<column name="accelerate" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[油门踏板行程]]></comment>
+	</column>
+	<column name="brake" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[制动]]></comment>
+	</column>
+	<column name="motor_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[驱动电机数量]]></comment>
+	</column>
+	<column name="motors">
+		<type name="text" length="0"/>
+		<comment><![CDATA[驱动电机]]></comment>
+	</column>
+	<column name="fuel_voltage">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[燃料电池电压]]></comment>
+	</column>
+	<column name="fuel_current">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[燃料电池电流]]></comment>
+	</column>
+	<column name="fuel_rate">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[燃料消耗率]]></comment>
+	</column>
+	<column name="fuel_probe_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[燃料电池温度探针总数]]></comment>
+	</column>
+	<column name="fuel_pts">
+		<type name="text" length="0"/>
+		<comment><![CDATA[探针温度列表]]></comment>
+	</column>
+	<column name="fuel_maxt">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[氢系统中最高温度]]></comment>
+	</column>
+	<column name="fuel_maxtp">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[氢系统中最高温度探针序号]]></comment>
+	</column>
+	<column name="fuel_h2max_con">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[氢气最高浓度]]></comment>
+	</column>
+	<column name="fuel_h2max_cp">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[氢气最高浓度传感器序号]]></comment>
+	</column>
+	<column name="fuel_h2max_pre">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[最高压力]]></comment>
+	</column>
+	<column name="fuel_h2max_pp">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高压力传感器代号]]></comment>
+	</column>
+	<column name="fuel_dcdc">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[高压DCDC 1 工作,2 断开]]></comment>
+	</column>
+	<column name="engine_state">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[发动机状态 1 启动,2 关闭,]]></comment>
+	</column>
+	<column name="engine_rotate">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[曲轴转速]]></comment>
+	</column>
+	<column name="engine_fuelrate">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[燃料消耗率]]></comment>
+	</column>
+	<column name="emax_vsn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高电压电池子系统号]]></comment>
+	</column>
+	<column name="emax_vn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高电压电池单体代号]]></comment>
+	</column>
+	<column name="emax_voltage" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[电池单体电压最高值]]></comment>
+	</column>
+	<column name="emin_vsn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最低电压电池子系统号]]></comment>
+	</column>
+	<column name="emin_vn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最低电压电池单体代号]]></comment>
+	</column>
+	<column name="emin_voltage" not-null="true">
+		<type name="float4" length="0"/>
+		<comment><![CDATA[电池单体电压最低值]]></comment>
+	</column>
+	<column name="emax_tsn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高温度子系统号]]></comment>
+	</column>
+	<column name="emax_tpn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高温度探针序号]]></comment>
+	</column>
+	<column name="emax_temp" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最高温度]]></comment>
+	</column>
+	<column name="emin_tsn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最低温度子系统号]]></comment>
+	</column>
+	<column name="emin_tpn" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最低温度探针序号]]></comment>
+	</column>
+	<column name="emin_temp" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[最低温度]]></comment>
+	</column>
+	<column name="alarm_level">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[报警等级 0 无故障,1 1级故障,2 2级故障,3 3级故障]]></comment>
+	</column>
+	<column name="alarm_flag">
+		<type name="int4" length="0"/>
+		<comment><![CDATA[报警标志]]></comment>
+	</column>
+	<column name="fault_storage_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[充电储能故障总数]]></comment>
+	</column>
+	<column name="fault_storage">
+		<type name="text" length="0"/>
+		<comment><![CDATA[充电储能故障代码列表]]></comment>
+	</column>
+	<column name="fault_motor_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[驱动电机故障数]]></comment>
+	</column>
+	<column name="fault_motor">
+		<type name="text" length="0"/>
+		<comment><![CDATA[驱动电机故障代码列表]]></comment>
+	</column>
+	<column name="fault_engine_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[发动机故障数]]></comment>
+	</column>
+	<column name="fault_engine">
+		<type name="text" length="0"/>
+		<comment><![CDATA[发动机故障代码列表]]></comment>
+	</column>
+	<column name="fault_other_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[其他故障数]]></comment>
+	</column>
+	<column name="fault_other">
+		<type name="text" length="0"/>
+		<comment><![CDATA[其他故障列表]]></comment>
+	</column>
+	<column name="subsystem8_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[可充电储能装置电压子系统个数]]></comment>
+	</column>
+	<column name="storage_voltages">
+		<type name="text" length="0"/>
+		<comment><![CDATA[电压数据详情]]></comment>
+	</column>
+	<column name="subsystem9_count">
+		<type name="smallint" length="0"/>
+		<comment><![CDATA[可充电储能装置温度子系统个数]]></comment>
+	</column>
+	<column name="storage_temps">
+		<type name="text" length="0"/>
+		<comment><![CDATA[温度数据详情]]></comment>
+	</column>
+	<column name="created" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0"/>
+		<comment><![CDATA[记录创建时间]]></comment>
+	</column>
+	<constraint name="gb32960_last_data_pk" type="pk-constr" table="public.gb32960_last_data">
+		<columns names="vin" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+</dbmodel>

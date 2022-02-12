@@ -3,13 +3,8 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.4-alpha" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="7"
-	 default-owner="postgres"
-	 layers="Default layer"
-	 active-layers="0"
-	 layer-name-colors="#000000"
-	 layer-rect-colors="#b2e162"
-	 show-layer-names="false" show-layer-rects="false">
+<dbmodel pgmodeler-ver="0.9.3" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="4"
+	 default-schema="public" default-owner="postgres">
 <role name="gb17691"
       createrole="true"
       login="true"
@@ -22,31 +17,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
       password="gb17691">
 </role>
 
-<role name="gb17691_cp1"
-      createrole="true"
-      login="true"
-      password="gb17691">
-</role>
-
-<role name="gb17691_cp2"
-      createrole="true"
-      login="true"
-      password="gb17691">
-</role>
-
-<role name="gb17691_cp3"
-      createrole="true"
-      login="true"
-      password="gb17691">
-</role>
-
 <database name="new_database" is-template="false" allow-conns="true">
 </database>
 
-<schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
+<schema name="public" layer="0" fill-color="#e1e1e1" sql-disabled="true">
 </schema>
 
-<table name="sys_menu_antd" layers="0" collapse-mode="2" max-obj-count="19" z-value="0">
+<table name="sys_menu_antd" layer="0" collapse-mode="2" max-obj-count="19" z-value="0">
 	<schema name="public"/>
 	<comment><![CDATA[菜单表(antd 版本)]]></comment>
 	<appended-sql><![CDATA[insert into sys_menu(id,name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values(2292261981995930670,'系统管理', 0, '1', 'system',           null,   0, 'M', '1', '', 'system',  '系统管理目录',1);
@@ -126,7 +103,7 @@ insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visib
 insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visible,perms,icon,note,create_by) values('日志导出', '2292273106053502019', '3', '#', '', 0, 'F', '1', 'monitor:logininfor:export',  '#','',1);
 
 ]]></appended-sql>
-	<position x="619" y="196"/>
+	<position x="420" y="320"/>
 	<column name="id" not-null="true" default-value="next_id()">
 		<type name="bigint" length="0"/>
 	</column>
@@ -189,11 +166,11 @@ insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visib
 	</constraint>
 </table>
 
-<table name="sys_dept_antd" layers="0" collapse-mode="2" max-obj-count="25" z-value="0">
+<table name="sys_dept_antd" layer="0" collapse-mode="2" max-obj-count="25" z-value="0">
 	<schema name="public"/>
 	<appended-sql><![CDATA[INSERT INTO organize (id, name, parent_id, parent_ids_path, serial_id) 
 VALUES (E'0', E'根节点', E'0', '/0', DEFAULT);]]></appended-sql>
-	<position x="1829" y="123"/>
+	<position x="960" y="260"/>
 	<column name="id" not-null="true">
 		<type name="int8" length="0"/>
 	</column>
@@ -277,7 +254,6 @@ VALUES (E'0', E'根节点', E'0', '/0', DEFAULT);]]></appended-sql>
 		behavior-type="CALLED ON NULL INPUT"
 		function-type="VOLATILE"
 		security-type="SECURITY INVOKER"
-		parallel-type="PARALLEL UNSAFE"
 		execution-cost="1"
 		row-amount="0">
 	<schema name="public"/>
@@ -305,7 +281,6 @@ end;
 		behavior-type="CALLED ON NULL INPUT"
 		function-type="VOLATILE"
 		security-type="SECURITY INVOKER"
-		parallel-type="PARALLEL UNSAFE"
 		execution-cost="1"
 		row-amount="0">
 	<schema name="public"/>
@@ -326,254 +301,5 @@ end;
 	 table="public.sys_dept_antd">
 		<function signature="public.fn_org_del()"/>
 </trigger>
-
-<table name="sys_role_antd" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
-	<schema name="public"/>
-	<role name="gb17691"/>
-	<comment><![CDATA[角色信息表]]></comment>
-	<appended-sql><![CDATA[insert into sys_role(id,name,code,data_scope,status,note,create_by) values(2292295943954895980,'管理员',   'admin',  1, '1', '管理员',1);
-insert into sys_role(id,name,code,data_scope,status,note,create_by) values(2292295943954895981,'普通角色', 'common', 2, '1', '普通角色',1);
-]]></appended-sql>
-	<position x="630" y="747"/>
-	<column name="id" not-null="true" default-value="next_id()">
-		<type name="bigint" length="0"/>
-	</column>
-	<column name="name" not-null="true">
-		<type name="text" length="0"/>
-		<comment><![CDATA[角色名称]]></comment>
-	</column>
-	<column name="code" not-null="true">
-		<type name="text" length="0"/>
-		<comment><![CDATA[角色权限字符串 role_key]]></comment>
-	</column>
-	<column name="data_scope" not-null="true" default-value="3">
-		<type name="smallint" length="0"/>
-		<comment><![CDATA[数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限]]></comment>
-	</column>
-	<column name="status" not-null="true" default-value="1">
-		<type name="char" length="1"/>
-		<comment><![CDATA[状态 0 disable 1 enable]]></comment>
-	</column>
-	<column name="note">
-		<type name="text" length="0"/>
-	</column>
-	<column name="create_by" not-null="true">
-		<type name="bigint" length="0"/>
-		<comment><![CDATA[创建者]]></comment>
-	</column>
-	<column name="created" not-null="true" default-value="now()">
-		<type name="timestamptz" length="0"/>
-		<comment><![CDATA[创建时间]]></comment>
-	</column>
-	<column name="update_by">
-		<type name="bigint" length="0"/>
-		<comment><![CDATA[更新者]]></comment>
-	</column>
-	<column name="updated" not-null="true" default-value="now()">
-		<type name="timestamptz" length="0"/>
-		<comment><![CDATA[更新时间]]></comment>
-	</column>
-	<constraint name="sys_role_pk" type="pk-constr" table="public.sys_role_antd">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="uq_role_code" type="uq-constr" table="public.sys_role_antd">
-		<columns names="code" ref-type="src-columns"/>
-	</constraint>
-</table>
-
-<table name="sys_role_menu_antd" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
-	<schema name="public"/>
-	<role name="gb17691"/>
-	<comment><![CDATA[角色和菜单关联表  角色1-N菜单]]></comment>
-	<position x="50" y="548"/>
-	<column name="role_id" not-null="true">
-		<type name="int8" length="0"/>
-	</column>
-	<column name="menu_id" not-null="true">
-		<type name="bigint" length="0"/>
-	</column>
-	<column name="status" not-null="true" default-value="1">
-		<type name="char" length="1"/>
-		<comment><![CDATA[1 选中的节点  0 未选中但该节点是必经的节点]]></comment>
-	</column>
-	<constraint name="sys_role_menu_pk" type="pk-constr" table="public.sys_role_menu_antd">
-		<columns names="role_id,menu_id" ref-type="src-columns"/>
-	</constraint>
-</table>
-
-<table name="sys_user_antd" layers="0" collapse-mode="2" max-obj-count="15" z-value="0">
-	<schema name="public"/>
-	<appended-sql><![CDATA[insert into sys_user(id,account,password,name,org_id,sex,status) values(2,'test','test','test',1,1,1);]]></appended-sql>
-	<position x="1159" y="184"/>
-	<column name="id" not-null="true" default-value="next_id()">
-		<type name="int8" length="0"/>
-	</column>
-	<column name="account" not-null="true">
-		<type name="text" length="0"/>
-	</column>
-	<column name="password" not-null="true">
-		<type name="text" length="0"/>
-	</column>
-	<column name="name" not-null="true">
-		<type name="text" length="0"/>
-	</column>
-	<column name="org_id" not-null="true">
-		<type name="int8" length="0"/>
-	</column>
-	<column name="sex" not-null="true" default-value="0">
-		<type name="char" length="1"/>
-		<comment><![CDATA[0  man  1 women]]></comment>
-	</column>
-	<column name="phone">
-		<type name="text" length="0"/>
-	</column>
-	<column name="photo">
-		<type name="text" length="0"/>
-	</column>
-	<column name="email">
-		<type name="text" length="0"/>
-	</column>
-	<column name="note">
-		<type name="text" length="0"/>
-	</column>
-	<column name="status" not-null="true" default-value="1">
-		<type name="char" length="1"/>
-		<comment><![CDATA[0 disable 1 enable]]></comment>
-	</column>
-	<column name="created" not-null="true" default-value="now()">
-		<type name="timestamptz" length="0"/>
-	</column>
-	<column name="create_by" not-null="true" default-value="0">
-		<type name="bigint" length="0"/>
-	</column>
-	<constraint name="sys_user_pk_ant" type="pk-constr" table="public.sys_user_antd">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="account_unique_ant" type="uq-constr" table="public.sys_user_antd">
-		<columns names="account" ref-type="src-columns"/>
-	</constraint>
-	<initial-data>
-<![CDATA[id•account•password•name•org_id•created⸣
-0•admin•'$2b$12$kIUzOsVzJG1Mnep8/yOwJ.8D3WxZOI2cRHS6/BZrK5GvsQHTk/OaG'•admin•0•⸣
-2•test•abcdef•test•0•]]>
-	</initial-data>
-</table>
-
-<function name="fn_org_insert_cp"
-		window-func="false"
-		returns-setof="false"
-		behavior-type="CALLED ON NULL INPUT"
-		function-type="VOLATILE"
-		security-type="SECURITY INVOKER"
-		parallel-type="PARALLEL UNSAFE"
-		execution-cost="1"
-		row-amount="0">
-	<schema name="public"/>
-	<role name="gb17691"/>
-	<language name="plpgsql"/>
-	<return-type>
-	<type name="trigger" length="0"/>
-	</return-type>
-	<definition><![CDATA[begin
-         update organize  set  childs=childs+1 where id=new.parent_id;
-	       return null;
-end;
-]]></definition>
-</function>
-
-<function name="fn_org_del_cp"
-		window-func="false"
-		returns-setof="false"
-		behavior-type="CALLED ON NULL INPUT"
-		function-type="VOLATILE"
-		security-type="SECURITY INVOKER"
-		parallel-type="PARALLEL UNSAFE"
-		execution-cost="1"
-		row-amount="0">
-	<schema name="public"/>
-	<role name="gb17691"/>
-	<language name="plpgsql"/>
-	<return-type>
-	<type name="trigger" length="0"/>
-	</return-type>
-	<definition><![CDATA[begin
-         update organize  set  childs=childs-1 where id=old.parent_id;
-	       return null;
-end;
-]]></definition>
-</function>
-
-<table name="sys_user_role_antd" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
-	<schema name="public"/>
-	<role name="gb17691"/>
-	<comment><![CDATA[用户和角色关联表  用户N-1角色]]></comment>
-	<appended-sql><![CDATA[insert into sys_user_role values ('0', '2292295943954895980');
-insert into sys_user_role values ('2', '2292295943954895981');]]></appended-sql>
-	<position x="1148" y="775"/>
-	<column name="user_id" not-null="true">
-		<type name="bigint" length="0"/>
-	</column>
-	<column name="role_id" not-null="true">
-		<type name="int8" length="0"/>
-	</column>
-	<constraint name="sys_user_role_pk_ant" type="pk-constr" table="public.sys_user_role_antd">
-		<columns names="user_id,role_id" ref-type="src-columns"/>
-	</constraint>
-</table>
-
-<constraint name="fk_menu_role" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_menu_antd" table="public.sys_role_menu_antd">
-	<columns names="menu_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
-<constraint name="fk_menu_role_id" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_role_antd" table="public.sys_role_menu_antd">
-	<columns names="role_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
-<constraint name="fk_dept_id_ant" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_dept_antd" table="public.sys_user_antd">
-	<columns names="org_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
-<constraint name="fk_user_id" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_user_antd" table="public.sys_user_role_antd">
-	<columns names="user_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
-<constraint name="fk_user_role_id" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.sys_role_antd" table="public.sys_user_role_antd">
-	<columns names="role_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
-<relationship name="rel_sys_role_menu_sys_role_antd" type="relfk" layers="0"
-	 src-table="public.sys_role_menu_antd"
-	 dst-table="public.sys_role_antd" reference-fk="fk_menu_role_id"
-	 src-required="false" dst-required="true"/>
-
-<relationship name="rel_sys_role_menu_antd_sys_menu_antd" type="relfk" layers="0"
-	 src-table="public.sys_role_menu_antd"
-	 dst-table="public.sys_menu_antd" reference-fk="fk_menu_role"
-	 src-required="false" dst-required="true"/>
-
-<relationship name="rel_sys_user_role_sys_user" type="relfk" layers="0"
-	 src-table="public.sys_user_role_antd"
-	 dst-table="public.sys_user_antd" reference-fk="fk_user_id"
-	 src-required="false" dst-required="true"/>
-
-<relationship name="rel_sys_user_role_sys_role_antd" type="relfk" layers="0"
-	 src-table="public.sys_user_role_antd"
-	 dst-table="public.sys_role_antd" reference-fk="fk_user_role_id"
-	 src-required="false" dst-required="true"/>
-
-<relationship name="rel_sys_user_ant_sys_dept_antd" type="relfk" layers="0"
-	 src-table="public.sys_user_antd"
-	 dst-table="public.sys_dept_antd" reference-fk="fk_dept_id_ant"
-	 src-required="false" dst-required="true"/>
 
 </dbmodel>
