@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 CAUTION: Do not modify this file unless you know what you are doing.
-         Unexpected results may occur if the code is changed deliberately.
+ Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.4-alpha" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="37"
-	 default-owner="postgres">
+<dbmodel pgmodeler-ver="0.9.4" use-changelog="false" last-position="0,934" last-zoom="1" max-obj-count="37"
+	 default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#d06a45"
+	 show-layer-names="false" show-layer-rects="false">
 <role name="gb17691"
-      createrole="true"
-      login="true"
-      password="gb17691">
-</role>
-
-<role name="gb17691_cp"
-      createrole="true"
-      login="true"
-      password="gb17691">
+ createrole="true"
+ login="true"
+ password="gb17691">
 </role>
 
 <database name="gb17691" is-template="false" allow-conns="true">
@@ -23,10 +22,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
 </schema>
 
+<schema name="jt808" layers="0" rect-visible="true" fill-color="#e1e1e1">
+	<role name="gb17691"/>
+</schema>
+
 <table name="login_logout_records" layers="0" collapse-mode="2" max-obj-count="10" z-value="0">
 	<schema name="public"/>
 	<role name="gb17691"/>
-	<position x="60" y="800"/>
+	<position x="80" y="780"/>
 	<column name="id" not-null="true">
 		<type name="int8" length="0"/>
 	</column>
@@ -614,7 +617,7 @@ end;
 <table name="sys_dict_data" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
 	<schema name="public"/>
 	<role name="gb17691"/>
-	<position x="80" y="1380"/>
+	<position x="80" y="1400"/>
 	<column name="id" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -756,10 +759,6 @@ lpn_color•9•其他•0]]>
 燃料类型•fule_type]]>
 	</initial-data>
 </table>
-
-<schema name="jt808" layers="0" rect-visible="true" fill-color="#e1e1e1">
-	<role name="gb17691"/>
-</schema>
 
 <table name="gps" layers="0" collapse-mode="2" max-obj-count="48" z-value="0">
 	<schema name="jt808"/>
@@ -1394,6 +1393,7 @@ insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visib
 	</column>
 	<column name="name" not-null="true">
 		<type name="text" length="0"/>
+		<comment><![CDATA[菜单名称]]></comment>
 	</column>
 	<column name="parent_id" not-null="true">
 		<type name="bigint" length="0"/>
@@ -1403,9 +1403,9 @@ insert into sys_menu(name,parent_id,sort,path,component,is_frame,menu_type,visib
 		<type name="smallint" length="0"/>
 		<comment><![CDATA[排序]]></comment>
 	</column>
-	<column name="path" not-null="true">
+	<column name="router_name" not-null="true">
 		<type name="text" length="0"/>
-		<comment><![CDATA[路由地址]]></comment>
+		<comment><![CDATA[路由名称]]></comment>
 	</column>
 	<column name="component">
 		<type name="text" length="0"/>

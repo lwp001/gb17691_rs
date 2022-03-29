@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.4" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="4"
+<dbmodel pgmodeler-ver="0.9.4" use-changelog="false" last-position="0,585" last-zoom="1" max-obj-count="4"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -24,6 +24,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="gb32960_data" layers="0" collapse-mode="2" max-obj-count="75" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
+	<appended-sql><![CDATA[
+CREATE TABLE p_data_2202 PARTITION OF gb3260_data  FOR VALUES FROM ('2022-02-01') TO ('2022-03-01');
+CREATE TABLE p_data_2203 PARTITION OF gb3260_data  FOR VALUES FROM ('2022-03-01') TO ('2022-04-01');
+CREATE TABLE p_data_2204 PARTITION OF gb3260_data  FOR VALUES FROM ('2022-04-01') TO ('2022-05-01');
+CREATE TABLE p_data  PARTITION OF gb3260_data   DEFAULT;]]></appended-sql>
 	<position x="240" y="380"/>
 	<column name="id" not-null="true">
 		<type name="bigserial" length="0"/>
@@ -273,6 +278,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="gb32960_data_pk" type="pk-constr" table="public.gb32960_data">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+	<partitioning type="RANGE">
+		<partitionkey>
+			<column name="utc"/>
+		</partitionkey>
+	</partitioning>
 </table>
 
 <table name="online_record" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
